@@ -158,15 +158,4 @@
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>© 2023 Clínica Salud y Vida. Todos los derechos reservados.</p>
-            <p>
-                <a class="text-decoration-none me-3" href="#"><i class="fab fa-facebook-f"></i></a>
-                <a class="text-decoration-none me-3" href="#"><i class="fab fa-twitter"></i></a>
-                <a class="text-decoration-none" href="#"><i class="fab fa-instagram"></i></a>
-            </p>
-        </div>
-    </footer>
     <?php require("../../template/footer.php") ?>
