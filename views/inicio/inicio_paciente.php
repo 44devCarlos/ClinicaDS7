@@ -6,7 +6,6 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Clínica </title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
     <style>
         body {
@@ -25,7 +24,7 @@
         }
         .logo {
             position: absolute;
-            top: -20px;
+            top: -10px;
             right: 0px;
             width: 110px;
             z-index: 1000; /* Asegura que el logo quede encima de otros elementos */
@@ -39,11 +38,6 @@
         }
         .services-section .card {
             margin-bottom: 30px;
-        }
-        .footer {
-            background-color: cyan;
-            padding: 20px 0;
-            text-align: center;
         }
         /* Animación de aparición */
     @keyframes fadeIn {
@@ -83,27 +77,33 @@
     }
 
     /* Efecto de hover en los botones */
-    .btn-primary {
+    a.btn-primary {
+        background-color: #0B3E57; /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .btn-primary:hover {
+    a.btn-primary:hover {
+        background-color: #2E708A; /* Color azul */
+        border-color: #2E708A;
         transform: translateY(-3px);
         box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+    }
+    a.btn-primary:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
     }
     </style>
 </head>
 
 <body>
-    <a href="../../controllers/cerrar_sesion.php" class="btn btn-primary my-3 mx-4">Cerrar Sesión</a>
-        
+    <a href="../../controllers/cerrar_sesion.php" class="btn btn-primary my-4 mx-4">Cerrar Sesión</a>
+    <img src="/img/LogoDs7.png" alt="Logo de la Clínica" class="logo">
     <section class="hero-section">
         <div class="container">
             <h1>Bienvenidos a Clinica Vitalis</h1>
             <p>Tu salud es nuestra prioridad</p>
         </div>
-        <img src="/img/LogoDs7.png" alt="Logo de la Clínica" class="logo">
-        
     </section>
 
 
@@ -158,4 +158,24 @@
             </div>
         </div>
     </section>
+    <script>
+    // Seleccionar el botón del menú y el contenedor del menú
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    // Evento para activar o desactivar el menú
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active'); // Cambia el ícono
+        menu.classList.toggle('active'); // Muestra u oculta el menú
+    });
+
+    // Cierra el menú si se hace clic fuera de él
+    document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
+            menuToggle.classList.remove('active');
+            menu.classList.remove('active');
+        }
+    });
+    </script>
+
     <?php require("../../template/footer.php") ?>
