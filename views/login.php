@@ -24,8 +24,9 @@
 
     .login-card {
         background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con un poco de transparencia */
-        border-radius: 10px; /* Bordes redondeados */
-        padding: 50px; /* Espaciado interno */
+        border-radius: 15px; /* Bordes redondeados */
+        padding: 50px;
+        height: fit-content;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
         text-align: center; /* Centrar el texto */
     }
@@ -47,20 +48,29 @@
         border-color: #007bff; /* Color del borde al enfocar */
     }
 
-    .btn-primary {
-        background-color: #007bff; /* Color azul */
-        border-color: #007bff; /* Color del borde */
+    button.btn-primary {
+        background-color: #0B3E57; /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+         /* Color del borde */
     }
 
-    .btn-primary:hover {
-        background-color: #0056b3; /* Color azul más oscuro al pasar el mouse */
-        border-color: #0056b3; /* Color del borde más oscuro */
+    button.btn-primary:hover {
+        background-color: #2E708A; /* Color azul */
+        border-color: #2E708A;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
     }
-
+    button.btn-primary:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
+    }
     .logo {
+        position: relative;
+        right: 10px;
         max-width: 60%; /* Asegúrate de que la imagen no exceda el ancho del contenedor */
         height: auto; /* Mantener la relación de aspecto */
-        margin-top: -80px;
     }
     /* Animación de entrada para la tarjeta */
     @keyframes fadeIn {
@@ -95,27 +105,11 @@
     .logo {
         animation: slideDown 1s ease-in-out;
     }
-
-    /* Efecto hover en el botón */
-    .btn-primary {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
-    }
-
-    /* Opcional: Suaviza el botón al presionarlo */
-    .btn-primary:active {
-        transform: scale(0.98); /* Hace un leve "clic" */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reduce la sombra */
-    }
 </style>
 
 <section class="container">
     <div class="login-card">
-        <img src="../img/LogoDs7connombre.png" alt="Logo de la Clínica" class="logo"> <!-- Logo aquí -->
+        <img src="../img/Clinica Vitalis login.png" alt="Logo de la Clínica" class="logo"> <!-- Logo aquí -->
         <h1 class="mb-4">Inicio de Sesión</h1>
         <form action="../controllers/procesar_login.php" method="post">
             <div class="mb-3">
