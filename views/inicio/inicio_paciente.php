@@ -45,6 +45,52 @@
             padding: 20px 0;
             text-align: center;
         }
+        /* Animación de aparición */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .services-section .card {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .services-section .card:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    .services-section .card:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+
+    .services-section .card:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+
+    .services-section .card:nth-child(4) {
+        animation-delay: 0.8s;
+    }
+
+    .services-section .card:nth-child(5) {
+        animation-delay: 1s;
+    }
+
+    /* Efecto de hover en los botones */
+    .btn-primary {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+    }
     </style>
 </head>
 
@@ -123,5 +169,4 @@
             </p>
         </div>
     </footer>
-
     <?php require("../../template/footer.php") ?>

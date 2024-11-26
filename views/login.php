@@ -62,6 +62,55 @@
         height: auto; /* Mantener la relación de aspecto */
         margin-top: -80px;
     }
+    /* Animación de entrada para la tarjeta */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Animación de entrada para el logo */
+    @keyframes slideDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Aplica la animación al contenedor */
+    .container {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Aplica la animación al logo */
+    .logo {
+        animation: slideDown 1s ease-in-out;
+    }
+
+    /* Efecto hover en el botón */
+    .btn-primary {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+    }
+
+    /* Opcional: Suaviza el botón al presionarlo */
+    .btn-primary:active {
+        transform: scale(0.98); /* Hace un leve "clic" */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reduce la sombra */
+    }
 </style>
 
 <section class="container">
@@ -71,12 +120,14 @@
         <form action="../controllers/procesar_login.php" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" required id="email" name="email" class="form-control">
+                <input type="email" required id="email" name="email" class="form-control" oninvalid="this.setCustomValidity('Por favor, ingresa un correo válido.')" 
+                oninput="this.setCustomValidity('')">
             </div>
 
             <div class="mb-3">
                 <label for="contrasena" class="form-label">Contraseña</label>
-                <input type="password" required id="contrasena" name="contrasena" class="form-control">
+                <input type="password" required id="contrasena" name="contrasena" class="form-control" oninvalid="this.setCustomValidity('Por favor, ingresa una contraseña.')" 
+                oninput="this.setCustomValidity('')">
             </div>
 
             <div class="text-center mt-4">
