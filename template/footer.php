@@ -24,7 +24,7 @@
 </body>
 <footer class="footer">
         <div class="container">
-            <p>© 2024 Clínica Salud y Vida. Todos los derechos reservados.</p>
+            <p>© 2024 Clínica Vitalis. Todos los derechos reservados.</p>
             <div class="social-icons">
                 <p>
                     <a class="text-decoration-none me-3" href="#"><i class="fab fa-facebook-f"></i></a>
