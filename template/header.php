@@ -1,3 +1,10 @@
+<?php
+session_start(); // Asegúrate de que la sesión esté iniciada
+
+// Recupera el nombre del usuario de la sesión
+$nombre = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Invitado'; // Valor predeterminado si no está logueado
+$rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
+?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
@@ -12,18 +19,18 @@
     header.header {
         position: fixed;
         display: flex;
-        background-color: #f8f9fa;
+        background-color: white;
         width: 100%;
         justify-content: space-between;
         align-items: center;
         padding: 10px;
     }
     .role-text {
-    font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
-    font-size: 30px; /* Ajusta el tamaño de la fuente según sea necesario */
-    margin-left: 10px; /* Espacio entre el logo y el texto */
-    align-self: center; /* Alinea verticalmente el texto con el logo */
-    font-weight: bold;
+        font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
+        font-size: 30px; /* Ajusta el tamaño de la fuente según sea necesario */
+        margin-left: 10px; /* Espacio entre el logo y el texto */
+        align-self: center; /* Alinea verticalmente el texto con el logo */
+        font-weight: bold;
     }
 
     /* Posicionamiento del dropdown debajo de la flecha */
@@ -36,19 +43,19 @@
     .user-dropdown i {
         margin-left: 5px;
     }
-    /* Dropdown ajustado para estar sin bordes y visible */
+    /* Dropdown ajustado para estar en una posición fija */
     div.dropdown-menu {
-        display: none;
-        position: absolute;
-        top: 180%; /* Aparece justo debajo del texto */
-        left: -28px; /* Ajusta este valor para mover el dropdown más a la izquierda */
-        background-color: white; /* Fondo blanco */
-        border: white; /* Sin bordes */
-        box-shadow: none; /* Sin sombra */
-        width: auto;
-        animation: headerfadeIn 0.3s ease-in-out;
-        z-index: 1000; /* Asegúrate de que el dropdown esté por encima de otros elementos */
-        min-width: 100px; /* Puedes ajustar el ancho mínimo según sea necesario */
+    display: none;
+    position: absolute;
+    top: 100%; /* Coloca el dropdown justo debajo del contenedor */ 
+    right: -5%;/* Alinea el dropdown a la izquierda del contenedor */
+    background-color: white; /* Fondo blanco */
+    border: white; /* Sin bordes */
+    box-shadow: none; /* Sin sombra */
+    width: auto; /* Puedes ajustar el ancho según sea necesario */
+    animation: headerfadeIn 0.3s ease-in-out;
+    z-index: 1000; /* Asegúrate de que el dropdown esté por encima de otros elementos */
+    min-width: 100px; /* Puedes ajustar el ancho mínimo según sea necesario */
     }
     div.dropdown-menu.show {
         display: block;
@@ -65,10 +72,10 @@
         }
     }
     div.dropdown-item {
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #333; /* Color del texto */
-    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #333; /* Color del texto */
+        transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
     }
     .user-dropdown .dropdown-item:hover {
         background-color: #0B3E57!important; /* Color de fondo al hacer clic */
@@ -81,13 +88,20 @@
         border-color: #2E708A !important;
         color: white;
     }
+    .username {
+    display: inline-block;
+    width: 120px; /* Establece un ancho fijo para el contenedor del texto del usuario */
+    text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es demasiado largo */
+    overflow: hidden; /* Oculta el texto que sobra */
+    white-space: nowrap; /* Evita que el texto se ajuste en varias líneas */
+    }
 </style>
 <header class="header">
     <img src="/img/Clinica Vitalis login.png" alt="Logo de la Clínica" class="logo">
-    <span class="role-text">Rol</span>
+    <span class="role-text"><?php echo htmlspecialchars($rol); ?></span>
     <!-- Dropdown del usuario -->
     <div class="dropdown user-dropdown">
-        <span>USUARIO</span>
+        <span><?php echo htmlspecialchars($nombre); ?></span>
         <i class="fas fa-chevron-down"></i>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="../../controllers/cerrar_sesion.php">Cerrar sesión</a>

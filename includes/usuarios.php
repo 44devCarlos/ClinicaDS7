@@ -114,4 +114,16 @@ class Usuarios
         }
         return false;
     }
+    public function consultar_usuario_por_id($usuario_id)
+    {
+        $query = "SELECT nombre FROM " . $this->table_name . " WHERE usuario_id = :usuario_id LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":usuario_id", $usuario_id);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result ? $result['nombre'] : false; // Devuelve el nombre o false si no se encuentra
+        }
+        return false;
+    }
 }
