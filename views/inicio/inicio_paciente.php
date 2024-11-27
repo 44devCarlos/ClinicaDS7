@@ -8,8 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
     <style>
         body {
+            display: flex;
+            flex-direction: column;
             font-family: 'Roboto', sans-serif;
             background-color: white;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1; /* Permite que el contenido ocupe el espacio disponible */
         }
         .hero-section {
             background: url('/img/bnda_paciente.jpg') no-repeat center center;
@@ -86,6 +92,7 @@
 </head>
 
 <body>
+<div class="content">
     <section class="hero-section">
         <div class="container">
             <h1>Bienvenidos a Clinica Vitalis</h1>
@@ -145,4 +152,5 @@
             </div>
         </div>
     </section>
+    </div>
     <?php require("../../template/footer.php")?>

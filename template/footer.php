@@ -1,6 +1,7 @@
 </div>
 <style>
     .footer {
+        position: relative;
             background-color: #0B3E57;
             padding: 20px 0;
             text-align: center;
