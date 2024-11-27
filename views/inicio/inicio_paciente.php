@@ -1,5 +1,4 @@
-<?php require("../../template/header.php"); ?>
-
+<?php require("../../template/header.php");?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,22 +11,12 @@
             font-family: 'Roboto', sans-serif;
             background-color: white;
         }
-        .navbar-brand {
-            font-weight: bold;
-        }
         .hero-section {
             background: url('/img/bnda_paciente.jpg') no-repeat center center;
             background-size: cover;
             color: white;
             text-align: center;
             padding: 100px 0;
-        }
-        .logo {
-            position: absolute;
-            top: -10px;
-            right: 0px;
-            width: 110px;
-            z-index: 1000; /* Asegura que el logo quede encima de otros elementos */
         }
         .hero-section h1 {
             font-size: 3rem;
@@ -97,8 +86,6 @@
 </head>
 
 <body>
-    <a href="../../controllers/cerrar_sesion.php" class="btn btn-primary my-4 mx-4">Cerrar Sesión</a>
-    <img src="/img/LogoDs7.png" alt="Logo de la Clínica" class="logo">
     <section class="hero-section">
         <div class="container">
             <h1>Bienvenidos a Clinica Vitalis</h1>
@@ -158,24 +145,4 @@
             </div>
         </div>
     </section>
-    <script>
-    // Seleccionar el botón del menú y el contenedor del menú
-    const menuToggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-
-    // Evento para activar o desactivar el menú
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active'); // Cambia el ícono
-        menu.classList.toggle('active'); // Muestra u oculta el menú
-    });
-
-    // Cierra el menú si se hace clic fuera de él
-    document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
-            menuToggle.classList.remove('active');
-            menu.classList.remove('active');
-        }
-    });
-    </script>
-
-    <?php require("../../template/footer.php") ?>
+    <?php require("../../template/footer.php")?>

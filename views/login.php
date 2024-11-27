@@ -1,5 +1,3 @@
-<?php require("../template/header.php"); ?>
-
 <style>
     html, body {
         height: 100%; /* Asegura que el html y body ocupen toda la altura */
