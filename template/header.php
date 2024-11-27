@@ -65,21 +65,21 @@
         }
     }
     div.dropdown-item {
-    padding: 10px;
+    padding: 5px 10px;
     text-decoration: none;
     color: #333; /* Color del texto */
     transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
     }
     .user-dropdown .dropdown-item:hover {
-        background-color: #2E708A; /* Color azul */
-        border-color: #2E708A;
-        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
-        color: white;
-    }
-    .dropdown-item:active {
         background-color: #0B3E57!important; /* Color de fondo al hacer clic */
         border-color: #0B3E57!important; /* Color del borde al hacer clic */
-    
+        color: white;
+        border-radius: 3px;
+    }
+    .user-dropdown .dropdown-item:active {
+        background-color: #2E708A !important; /* Color azul */
+        border-color: #2E708A !important;
+        color: white;
     }
 </style>
 <header class="header">
