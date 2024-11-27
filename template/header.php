@@ -1,6 +1,11 @@
 <?php
 session_start(); // Asegúrate de que la sesión esté iniciada
-
+// Verifica si el usuario está autenticado
+if (!isset($_SESSION['rol'])) {
+    // Redirige al login si no está autenticado
+    header("Location: ../../index.php");
+    exit();
+}
 // Recupera el nombre del usuario de la sesión
 $nombre = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Invitado'; // Valor predeterminado si no está logueado
 $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
@@ -97,7 +102,9 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
     }
 </style>
 <header class="header">
-    <img src="/img/Clinica Vitalis login.png" alt="Logo de la Clínica" class="logo">
+    <button id="logo-button" style="background: none; border: none; padding: 0; cursor: pointer;">
+        <img src="/img/Clinica Vitalis login.png" alt="Logo de la Clínica" class="logo">
+    </button>
     <span class="role-text"><?php echo htmlspecialchars($rol); ?></span>
     <!-- Dropdown del usuario -->
     <div class="dropdown user-dropdown">
@@ -125,5 +132,34 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
         if (!userDropdown.contains(e.target)) {
             dropdownMenu.classList.remove('show');
         }
+    });
+    // Redirigir según el rol al hacer clic en el logo
+    document.getElementById('logo-button').addEventListener('click', function () {
+        let ruta;
+
+        // Determina la ruta según el rol
+        switch ('<?php echo htmlspecialchars($rol); ?>') {
+            case 'Admin':
+                ruta = '/views/inicio/admin_inicio.php'; // Ruta para el rol Admin
+                break;
+            case 'Paciente':
+                ruta = '/views/inicio/inicio_paciente.php'; // Ruta para el rol Usuario
+                break;
+            case 'Médico':
+                ruta = '/views/inicio/medico_inicio.php'; // Ruta para el rol Invitado
+                break;
+            case 'Recepcionista':
+                ruta = '/views/inicio/inicio_recepcionista.php'; // Ruta para el rol Invitado
+                break;
+            case 'Recursos Humanos':
+                ruta = '/views/inicio/inicio_recursos_humanos.php'; // Ruta para el rol Invitado
+                break;
+            default:
+                ruta = '/index.php'; // Ruta por defecto
+                break;
+        }
+
+        // Redirige a la ruta determinada
+        window.location.href = ruta;
     });
 </script>
