@@ -6,7 +6,9 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     color: #343a40;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
 }
 
 /* Estilos para el contenedor del formulario */
@@ -14,11 +16,11 @@ body {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 0px;
+    padding: 20px; /* Añadir algo de padding */
+    height: 100vh;
     max-width: 500px; /* Limitar el ancho del formulario */
-    max-height: 793px;
-    margin: 1px; /* Centrar el contenedor */
-    margin-left: 690px;
+    margin: auto; /* Centrar el contenedor horizontalmente */
+    flex-grow: 1; /* Permitir que el contenedor crezca y ocupe el espacio disponible */
 }
 
 /* Estilos para los títulos de las secciones */
@@ -121,5 +123,4 @@ input[type="date"]:focus,
         </form>
     </div>
 </section>
-
 <?php require("../../template/footer.php") ?>
