@@ -144,7 +144,7 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
 
         // Determina la ruta según el rol
         switch ('<?php echo htmlspecialchars($rol); ?>') {
-            case 'Admin':
+            case 'Administrador':
                 ruta = '/views/inicio/admin_inicio.php'; // Ruta para el rol Admin
                 break;
             case 'Paciente':
