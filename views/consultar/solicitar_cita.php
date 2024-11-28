@@ -8,18 +8,19 @@ body {
     color: #343a40;
     display: flex;
     flex-direction: column;
-    min-height: 100px; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+    min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
 }
 
 /* Estilos para el contenedor del formulario */
 .container2 {
+    position: relative;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 0px; /* Añadir algo de padding */
-    height: 794px;
-    max-width: 450px; /* Limitar el ancho del formulario */
-    margin-left: 720px;
+    width: 500px;
+    max-width: 500px; /* Limitar el ancho del formulario */
+    margin: auto;
+    margin-top: 250px; /* Centrar el contenedor horizontalmente */
 }
 
 /* Estilos para los títulos de las secciones */
@@ -31,7 +32,8 @@ h2 {
 
 /* Estilos para los grupos de formularios */
 .form-group {
-    margin-bottom: 20px;
+    width: 250px;
+    margin-bottom: 25px;
 }
 
 /* Estilos para las etiquetas */
@@ -58,30 +60,34 @@ input[type="date"]:focus,
     outline: none;
 }
 
-/* Estilos para el botón */
-.btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+button.btn-primary {
+        background-color: #0B3E57; /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+         /* Color del borde */
+    }
 
-/* Efecto al pasar el mouse sobre el botón */
-.btn:hover {
-    background-color: #0056b3;
-}
+    button.btn-primary:hover {
+        background-color: #2E708A; /* Color azul */
+        border-color: #2E708A;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
+    }
+    button.btn-primary:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
+    }
 
 /* Estilos para el texto centrado */
 .text-center {
     text-align: center;
 }
+
 </style>
 
 <section class="container2">
-    <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height: calc(100vh - 560px);">
         <form action="../../controllers/procesar_solicitar_cita.php" method="post">
             <div class="form-group">
                 <label for="servicio">Servicio</label>

@@ -32,6 +32,7 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
         align-items: center;
         padding: 10px;
         z-index: 10000000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Línea gris tenue */
     }
     .role-text {
         font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
@@ -39,7 +40,7 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
         align-self: center; /* Alinea verticalmente el texto con el logo */
         font-weight: bold;
         align-self: center;
-        margin-right: 50px;
+        margin-right: 47px;
     }
 
     /* Posicionamiento del dropdown debajo de la flecha */
