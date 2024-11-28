@@ -8,7 +8,7 @@ body {
     color: #343a40;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+    min-height: 100px; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
 }
 
 /* Estilos para el contenedor del formulario */
@@ -16,11 +16,10 @@ body {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px; /* Añadir algo de padding */
-    height: 100vh;
-    max-width: 500px; /* Limitar el ancho del formulario */
-    margin: auto; /* Centrar el contenedor horizontalmente */
-    flex-grow: 1; /* Permitir que el contenedor crezca y ocupe el espacio disponible */
+    padding: 0px; /* Añadir algo de padding */
+    height: 794px;
+    max-width: 450px; /* Limitar el ancho del formulario */
+    margin-left: 720px;
 }
 
 /* Estilos para los títulos de las secciones */
