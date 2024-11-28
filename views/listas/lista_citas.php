@@ -20,7 +20,7 @@ if ($result === false) {
     <div class="row d-flex justify-content-center align-items-center min-vh-100">
         <?php if (isset($result) && !empty($result)) : ?>
             <div class="table-responsive">
-                <h1 class="text-center">Citas del dia</h1>
+                <h1 class="text-center">Citas</h1>
                 <table class="table table-striped table-bordered table-hover text-center">
                     <thead class="table-light">
                         <tr>

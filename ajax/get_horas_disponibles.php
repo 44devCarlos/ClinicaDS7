@@ -6,9 +6,10 @@ if (isset($_POST["id_turno"])) {
     $database = new Database();
     $db = $database->getConnection();
     // Obtener las horas disponibles del medico
-    $query = $db->prepare("CALL ConsultarHorasDisponibles(:id_medico, :id_turno)");
+    $query = $db->prepare("CALL ConsultarHorasDisponibles(:id_medico, :id_turno, :fecha)");
     $query->bindParam(':id_medico', $_POST["medico_id"], PDO::PARAM_INT);
     $query->bindParam(':id_turno', $_POST["id_turno"], PDO::PARAM_INT);
+    $query->bindParam(':fecha', $_POST["fecha"], PDO::PARAM_STR);
     $query->execute();
     $stmt = $query;
     $turno = ($_POST["id_turno"] == 1) ? 'am' : (($_POST["id_turno"] == 2) ? 'pm' : '');
