@@ -33,7 +33,8 @@ h2 {
 /* Estilos para los grupos de formularios */
 .form-group {
     width: 250px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+    margin-top: 12px;
 }
 
 /* Estilos para las etiquetas */
