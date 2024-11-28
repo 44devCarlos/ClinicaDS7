@@ -16,11 +16,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="contrasena" class="form-label">Contraseña</label>
-                    <input type="password" required id="contrasena" name="contrasena" class="form-control">
-                </div>
-
-                <div class="mb-3">
                     <label for="rol" class="form-label">Rol</label>
                     <select name="rol" required id="rol" class="form-select">
                         <option value="" selected disabled>Seleccione un rol</option>

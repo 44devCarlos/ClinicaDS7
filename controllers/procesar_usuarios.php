@@ -1,21 +1,25 @@
 <?php
 include "../includes/Database.php";
 include "../includes/Usuarios.php";
+include "../includes/Correo.php";
 
 // Crear una instancia de la clase Database y obtener la conexión
 $database = new Database();
 $db = $database->getConnection();
 
 $usuarios = new Usuarios($db);
+$correo = new Correo($db);
 
 $usuarios->nombre = $_POST['nombre'];
 $usuarios->email = $_POST['email'];
-$usuarios->contrasena = password_hash($_POST['contrasena'], PASSWORD_DEFAULT);
+$contrasena = $usuarios->generar_contraseña(16);
+$usuarios->contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
 $usuarios->rol = $_POST['rol'];
 
 // Registrar el servicio médico
 if ($usuarios->registrar_usuarios()) {
     $resultado = "Usuario registrado exitosamente.";
+    $correo->cambiar_pass($usuarios->email, $usuarios, $contrasena);
 } else {
     $resultado = "Error al registrar el Usuario.";
 }

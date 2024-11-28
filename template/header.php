@@ -1,5 +1,7 @@
 <?php
-session_start(); // Asegúrate de que la sesión esté iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} // Asegúrate de que la sesión esté iniciada
 // Verifica si el usuario está autenticado
 if (!isset($_SESSION['rol'])) {
     // Redirige al login si no está autenticado

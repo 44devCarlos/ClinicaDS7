@@ -45,11 +45,6 @@
                     <input type="direccion" required id="direccion" name="direccion" class="form-control">
                 </div>
 
-                <div class="mb-3">
-                    <label for="contrasena" class="form-label">Contraseña</label>
-                    <input type="password" required id="contrasena" name="contrasena" class="form-control">
-                </div>
-
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">Registrar Paciente</button>
                 </div>

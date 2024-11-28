@@ -18,6 +18,7 @@ $medico->institucion = $_POST['institucion'];
 // Registrar médico en la base de datos
 if ($medico->registrar_medico()) {
     $resultado = "Médico registrado con éxito.";
+    
 } else {
     $resultado = "Error al registrar el médico.";
 }

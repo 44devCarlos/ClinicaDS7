@@ -1,9 +1,12 @@
 <?php
 require("../includes/Database.php");
+include "../includes/Correo.php";
 session_start();
 
 $database = new Database();
 $db = $database->getConnection();
+
+$correo = new Correo($db);
 
 // Obtener los datos del formulario
 $cita_id = $_POST['cita_id'];
@@ -26,7 +29,7 @@ if ($pagoExitoso) {
         $updateCitaQuery = "UPDATE citas SET transaccion = 'Pagado' WHERE cita_id = :cita_id";
         $stmt = $db->prepare($updateCitaQuery);
         $stmt->bindParam(':cita_id', $cita_id, PDO::PARAM_INT);
-        
+
         // Ejecutar la consulta y verificar errores
         if ($stmt->execute()) {
             // Insertar un nuevo registro en la tabla `facturas`
@@ -39,6 +42,22 @@ if ($pagoExitoso) {
             // Confirmar la transacción
             $db->commit();
             $_SESSION['mensaje'] = "Pago procesado exitosamente.";
+            $query = "SELECT 
+                        c.cita_id,
+                        u.nombre,
+                        u.email,
+                        sm.nombre_servicio
+                        FROM citas AS c
+                        LEFT JOIN pacientes AS p ON p.paciente_id = c.paciente_id
+                        LEFT JOIN usuarios AS u ON u.usuario_id = p.usuario_id
+                        LEFT JOIN servicios_medicos AS sm ON sm.servicio_id = c.servicio_id
+                        WHERE c.cita_id = :cita_id ";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':cita_id', $cita_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            //enviar correo de factura
+            $correo->enviar_factura($result["email"], $result["nombre_servicio"], $monto);
             header("Location: ../controllers/pago_exitoso.php");
         } else {
             // Capturar y registrar el error si falla la actualización
