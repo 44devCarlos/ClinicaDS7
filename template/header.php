@@ -32,7 +32,7 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
         align-items: center;
         padding: 10px;
         z-index: 10000000;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Línea gris tenue */
+        border-bottom: 0.3px solid rgba(0, 0, 0, 0.1); /* Línea gris tenue */
     }
     .role-text {
         font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
