@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         10.4.32-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.6.0.6765
+-- HeidiSQL Versión:             12.8.0.6908
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -60,13 +60,13 @@ CREATE TABLE IF NOT EXISTS `citas` (
 
 -- Volcando datos para la tabla gestion_clinica.citas: ~7 rows (aproximadamente)
 INSERT INTO `citas` (`cita_id`, `fecha`, `hora`, `estado`, `medico_id`, `paciente_id`, `servicio_id`, `id_turno`, `transaccion`) VALUES
-	(1, '2024-11-09', 3, 'Agendado', 16, 8, 1, 1, NULL),
-	(2, '2024-11-09', 1, 'Agendado', 16, 8, 1, 1, NULL),
-	(3, '2024-11-09', 2, 'Agendado', 16, 8, 1, 1, NULL),
+	(1, '2024-11-09', 3, 'Cancelado', 16, 8, 1, 1, 'No Pagado'),
+	(2, '2024-11-16', 1, 'Agendado', 16, 8, 1, 1, 'Pagado'),
+	(3, '2024-11-16', 2, 'Agendado', 16, 8, 1, 1, 'No Pagado'),
 	(4, '2024-11-09', NULL, 'No Agendada', NULL, 8, 1, 1, NULL),
 	(5, '2024-11-09', NULL, 'No Agendada', NULL, 8, 1, 1, NULL),
-	(6, '2024-11-18', 3, 'Agendado', 19, 9, 1, 1, 'No Pagado'),
-	(7, '2024-11-19', NULL, 'No Agendada', NULL, 9, 1, 1, NULL);
+	(6, '2024-11-28', NULL, 'No Agendada', NULL, 8, 1, 1, NULL),
+	(7, '2024-11-29', 8, 'Agendado', 16, 8, 1, 2, 'No Pagado');
 
 -- Volcando estructura para procedimiento gestion_clinica.ConsultarCitas
 DROP PROCEDURE IF EXISTS `ConsultarCitas`;
@@ -81,7 +81,7 @@ BEGIN
       LEFT JOIN pacientes ON pacientes.paciente_id = citas.paciente_id
       LEFT JOIN servicios_medicos ON servicios_medicos.servicio_id = citas.servicio_id
 		LEFT JOIN usuarios ON usuarios.usuario_id = pacientes.usuario_id 
-		WHERE estado LIKE 'No Agendada';
+		WHERE citas.estado LIKE 'No Agendada';
 END//
 DELIMITER ;
 
@@ -111,7 +111,8 @@ DROP PROCEDURE IF EXISTS `ConsultarHorasDisponibles`;
 DELIMITER //
 CREATE PROCEDURE `ConsultarHorasDisponibles`(
 	IN `_id_medico` INT,
-	IN `_id_turno` INT
+	IN `_id_turno` INT,
+	IN `_fecha` VARCHAR(50)
 )
 BEGIN
 	SELECT 
@@ -120,7 +121,7 @@ BEGIN
 	h.id_hora
 	FROM horas AS h
 	LEFT JOIN turno AS t ON t.id_turno = h.id_turno
-	LEFT JOIN citas AS c ON c.hora = h.id_hora AND c.medico_id = _id_medico
+	LEFT JOIN citas AS c ON c.hora = h.id_hora AND c.medico_id = _id_medico AND c.fecha = _fecha
 	WHERE h.id_turno = _id_turno AND c.hora IS NULL;
 END//
 DELIMITER ;
@@ -152,14 +153,16 @@ CREATE PROCEDURE `Consultar_Citas_Del_Dia`(
 )
 BEGIN
     SELECT 
-        pacientes.paciente_id AS paciente_id, -- Agregar el paciente_id
+        pacientes.paciente_id AS paciente_id,
         pacientes.cedula AS Cedula,
         usuarios.nombre AS Paciente,
-        citas.hora
+        citas.hora AS id_hora,
+        horas.hora
     FROM citas
     LEFT JOIN pacientes ON pacientes.paciente_id = citas.paciente_id
-    LEFT JOIN usuarios ON usuarios.usuario_id = pacientes.usuario_id 
-    WHERE medico_id = _medico_id 
+    LEFT JOIN usuarios ON usuarios.usuario_id = pacientes.usuario_id
+    LEFT JOIN horas ON horas.id_hora = citas.hora
+    WHERE citas.medico_id = _medico_id 
 	 AND citas.fecha = CURDATE()
 	 AND citas.estado = 'Agendado';
 END//
@@ -219,13 +222,14 @@ CREATE TABLE IF NOT EXISTS `diagnosticos` (
   KEY `fk_paciente` (`paciente_id`),
   CONSTRAINT `diagnosticos_ibfk_1` FOREIGN KEY (`historial_id`) REFERENCES `historial_clinico` (`historial_id`),
   CONSTRAINT `fk_paciente` FOREIGN KEY (`paciente_id`) REFERENCES `pacientes` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla gestion_clinica.diagnosticos: ~3 rows (aproximadamente)
 INSERT INTO `diagnosticos` (`diagnostico_id`, `historial_id`, `descripcion`, `fecha_diagnostico`, `paciente_id`) VALUES
 	(21, 20, 'dolor de muelas', '2024-11-01 02:04:33', 8),
 	(22, 21, 'dolor de muelas', '2024-11-06 14:07:25', 8),
-	(23, 22, 'dolor de muelas', '2024-11-06 14:08:48', 8);
+	(23, 22, 'dolor de muelas', '2024-11-06 14:08:48', 8),
+	(24, 23, 'Dolor de Cabeza,Dolor de garganta', '2024-11-16 20:32:51', 8);
 
 -- Volcando estructura para tabla gestion_clinica.facturas
 DROP TABLE IF EXISTS `facturas`;
@@ -237,11 +241,12 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   `estado` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`factura_id`),
   KEY `paciente_id` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla gestion_clinica.facturas: ~1 rows (aproximadamente)
 INSERT INTO `facturas` (`factura_id`, `paciente_id`, `fecha_emision`, `monto`, `estado`) VALUES
-	(5, 8, '2024-11-02 19:13:13', 30.00, 'Pagado');
+	(5, 8, '2024-11-02 19:13:13', 30.00, 'Pagado'),
+	(6, 8, '2024-11-28 10:14:15', 30.00, 'Pagado');
 
 -- Volcando estructura para tabla gestion_clinica.farmacia
 DROP TABLE IF EXISTS `farmacia`;
@@ -265,13 +270,14 @@ CREATE TABLE IF NOT EXISTS `historial_clinico` (
   `fecha_creacion` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`historial_id`),
   KEY `paciente_id` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla gestion_clinica.historial_clinico: ~3 rows (aproximadamente)
 INSERT INTO `historial_clinico` (`historial_id`, `paciente_id`, `fecha_creacion`) VALUES
 	(20, 8, '2024-11-01 02:04:33'),
 	(21, 8, '2024-11-06 14:07:25'),
-	(22, 8, '2024-11-06 14:08:48');
+	(22, 8, '2024-11-06 14:08:48'),
+	(23, 8, '2024-11-16 20:32:51');
 
 -- Volcando estructura para tabla gestion_clinica.horario
 DROP TABLE IF EXISTS `horario`;
@@ -286,13 +292,14 @@ CREATE TABLE IF NOT EXISTS `horario` (
   KEY `id_turno` (`id_turno`) USING BTREE,
   CONSTRAINT `FK_horario_medicos` FOREIGN KEY (`id_medico`) REFERENCES `medicos` (`usuario_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_horario_turno` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id_turno`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.horario: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla gestion_clinica.horario: ~4 rows (aproximadamente)
 INSERT INTO `horario` (`id_horario`, `dia`, `id_medico`, `id_turno`) VALUES
 	(1, '2024-11-09', 16, 1),
 	(11, '2024-11-09', 16, 2),
-	(15, '2024-11-18', 19, 1);
+	(15, '2024-11-28', 16, 1),
+	(16, '2024-11-29', 16, 2);
 
 -- Volcando estructura para tabla gestion_clinica.horas
 DROP TABLE IF EXISTS `horas`;
@@ -349,14 +356,15 @@ CREATE TABLE IF NOT EXISTS `medicamentos` (
   PRIMARY KEY (`medicamento_id`),
   KEY `id_padecimiento` (`id_padecimiento`),
   CONSTRAINT `FK_medicamentos_padecimiento` FOREIGN KEY (`id_padecimiento`) REFERENCES `padecimiento` (`id_padecimiento`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla gestion_clinica.medicamentos: ~4 rows (aproximadamente)
 INSERT INTO `medicamentos` (`medicamento_id`, `nombre`, `cantidad`, `unidad`, `tipo`, `tratamiento`, `id_padecimiento`) VALUES
-	(1, 'Paracetamol', 100, 'mg', NULL, NULL, 1),
-	(2, 'Ibuprofeno', 20, 'mg', NULL, NULL, 1),
-	(3, 'Amoxilicina', 50, 'mg', NULL, NULL, 1),
-	(4, 'Aspirina', 20, 'mg', NULL, NULL, 1);
+	(1, 'Paracetamol', 100, 'mg', NULL, NULL, NULL),
+	(2, 'Ibuprofeno', 20, 'mg', NULL, NULL, NULL),
+	(3, 'Amoxilicina', 50, 'mg', NULL, NULL, NULL),
+	(4, 'Aspirina', 20, 'mg', NULL, NULL, NULL),
+	(15, 'Amoxicilina', 100, 'mg', 'a', '1 cada 8 horas', 2);
 
 -- Volcando estructura para tabla gestion_clinica.medicos
 DROP TABLE IF EXISTS `medicos`;
@@ -373,12 +381,11 @@ CREATE TABLE IF NOT EXISTS `medicos` (
   KEY `medicos_ibfk_1` (`usuario_id`),
   CONSTRAINT `FK_medicos_servicios_medicos` FOREIGN KEY (`especialidad`) REFERENCES `servicios_medicos` (`servicio_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `medicos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.medicos: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla gestion_clinica.medicos: ~0 rows (aproximadamente)
 INSERT INTO `medicos` (`medico_id`, `usuario_id`, `especialidad`, `no_licencia_medica`, `anio_experiencia`, `institucion`, `fecha_registro`) VALUES
-	(5, 16, 1, '2020-1236', 7, 'Universidad Interamericana de Panamá', '2024-10-29 22:22:54'),
-	(10, 19, 1, '2021-1234', 13, 'Universidad Interamericana de Panamá', '2024-11-18 14:30:08');
+	(5, 16, 1, '2020-1236', 7, 'Universidad Interamericana de Panamá', '2024-10-29 22:22:54');
 
 -- Volcando estructura para procedimiento gestion_clinica.PacienteConsultarCita
 DROP PROCEDURE IF EXISTS `PacienteConsultarCita`;
@@ -420,20 +427,22 @@ BEGIN
 	sub.Especialidad,
 	sub.Fecha,
 	sub.Hora,
+	sub.hora,
 	u.nombre AS Medico,
 	sub.cita_id
 	FROM (
 		SELECT 
 		s.nombre_servicio AS "Especialidad",
 		c.fecha AS Fecha,
-		c.hora AS Hora,
+		h.hora AS Hora,
 		c.medico_id,
 		c.cita_id
 		FROM usuarios AS u
 		LEFT JOIN pacientes AS p ON p.usuario_id = u.usuario_id
 		LEFT JOIN citas AS c ON c.paciente_id = p.paciente_id
 		LEFT JOIN servicios_medicos AS s ON s.servicio_id = c.servicio_id
-		WHERE u.usuario_id = _usuario_id AND c.estado LIKE "Agendada"
+		LEFT JOIN horas AS h ON h.id_hora = c.hora
+		WHERE u.usuario_id = _usuario_id AND c.estado LIKE "Agendado"
 	)AS sub
 	LEFT JOIN medicos AS m ON m.usuario_id = sub.medico_id
 	LEFT JOIN usuarios AS u ON u.usuario_id = sub.medico_id;
@@ -454,12 +463,11 @@ CREATE TABLE IF NOT EXISTS `pacientes` (
   PRIMARY KEY (`paciente_id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `FK_pacientes_usuarios` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.pacientes: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla gestion_clinica.pacientes: ~0 rows (aproximadamente)
 INSERT INTO `pacientes` (`paciente_id`, `cedula`, `fecha_nacimiento`, `genero`, `telefono`, `direccion`, `fecha_registro`, `usuario_id`) VALUES
-	(8, '8-974-110', '2001-06-13', 'masculino', '61744815', 'El Valle San Isidro Sector 2', '2024-10-31 19:16:06', 13),
-	(9, '8-1040-3020', '2024-11-30', 'masculino', '164', 'Samaria despues del puente rojo', '2024-11-18 14:06:08', 20);
+	(8, '8-974-110', '2001-06-13', 'masculino', '61744815', 'El Valle San Isidro Sector 2', '2024-10-31 19:16:06', 13);
 
 -- Volcando estructura para tabla gestion_clinica.padecimiento
 DROP TABLE IF EXISTS `padecimiento`;
@@ -467,11 +475,12 @@ CREATE TABLE IF NOT EXISTS `padecimiento` (
   `id_padecimiento` int(11) NOT NULL AUTO_INCREMENT,
   `padecimiento` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_padecimiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla gestion_clinica.padecimiento: ~1 rows (aproximadamente)
 INSERT INTO `padecimiento` (`id_padecimiento`, `padecimiento`) VALUES
-	(1, 'Dolor de Cabeza');
+	(1, 'Dolor de Cabeza'),
+	(2, 'Dolor de garganta');
 
 -- Volcando estructura para tabla gestion_clinica.recetas
 DROP TABLE IF EXISTS `recetas`;
@@ -484,13 +493,14 @@ CREATE TABLE IF NOT EXISTS `recetas` (
   PRIMARY KEY (`id`),
   KEY `paciente_id` (`paciente_id`),
   CONSTRAINT `recetas_ibfk_1` FOREIGN KEY (`paciente_id`) REFERENCES `pacientes` (`paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla gestion_clinica.recetas: ~3 rows (aproximadamente)
 INSERT INTO `recetas` (`id`, `paciente_id`, `medicamento`, `tratamiento`, `fecha_prescripcion`) VALUES
 	(13, 8, 'panadol', 'una cada 8 horas', '2024-11-01 07:04:33'),
 	(14, 8, 'panadol', '1 cada 8 horas', '2024-11-06 19:07:25'),
-	(15, 8, 'panadol', '1 cada 8 horas', '2024-11-06 19:08:48');
+	(15, 8, 'panadol', '1 cada 8 horas', '2024-11-06 19:08:48'),
+	(16, 8, 'Panadol', '1 cada 4 horas', '2024-11-17 01:32:51');
 
 -- Volcando estructura para procedimiento gestion_clinica.RegistrarPaciente
 DROP PROCEDURE IF EXISTS `RegistrarPaciente`;
@@ -559,13 +569,12 @@ CREATE TABLE IF NOT EXISTS `servicios_medicos` (
   `descripcion` text DEFAULT NULL,
   `costo` double DEFAULT NULL,
   PRIMARY KEY (`servicio_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.servicios_medicos: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla gestion_clinica.servicios_medicos: ~2 rows (aproximadamente)
 INSERT INTO `servicios_medicos` (`servicio_id`, `nombre_servicio`, `descripcion`, `costo`) VALUES
 	(1, 'Medicina General', NULL, 30),
-	(2, 'Laboratorio', NULL, 50),
-	(3, 'Neurocirujano', NULL, 13000);
+	(2, 'Laboratorio', NULL, 50);
 
 -- Volcando estructura para procedimiento gestion_clinica.SolicitarCita
 DROP PROCEDURE IF EXISTS `SolicitarCita`;
@@ -614,21 +623,21 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `email` varchar(100) DEFAULT NULL,
   `contrasena` varchar(255) DEFAULT NULL,
   `rol` varchar(50) DEFAULT NULL,
+  `restablecer` text DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`usuario_id`),
   KEY `FK_usuarios_roles` (`rol`),
   CONSTRAINT `FK_usuarios_roles` FOREIGN KEY (`rol`) REFERENCES `roles` (`rol`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.usuarios: ~7 rows (aproximadamente)
-INSERT INTO `usuarios` (`usuario_id`, `nombre`, `email`, `contrasena`, `rol`, `fecha_creacion`) VALUES
-	(4, 'Pedrito', 'didiervillalaz04@gmail.com', '$2y$10$RzmqVBekNoYqP8X5ZUHKDOTRm6ovyShL9oIa.aYjcCKjetYCKRkQG', 'Administrador', '2024-10-09 01:44:47'),
-	(13, 'Alberto', 'prueba1234@gmail.com', '$2y$10$7b1EnmHLFZomz7wxJ9v8/u1sNPWhahQQ4z9i/y0T1xXAny6qJ0Hsu', 'Paciente', '2024-10-31 19:16:06'),
-	(14, 'Luis', 'luismurcia0106@gmail.com', '$2y$10$wfC05QY.gONYAYbndQSCeOPKs9UkdcCtKSVwM/TgRoVGiELlDKoPO', 'Administrador', '2024-11-02 20:07:30'),
-	(16, 'Carlos Alberto', 'carv2012@gmail.com', '$2y$10$V4XMD3n8vuTmPYowXjnqT.iXKMgflVEzpNfn.ouHl9Q3TzDtehXjq', 'Médico', '2024-11-09 16:08:57'),
-	(18, 'Jaider Rico', 'jaider.rico@gmail.com', '$2y$10$G9Pp6s7xiTkiq8XgSfjojulie4lR21ur88ko07PKYA2LikgqkQw1q', 'Recepcionista', '2024-11-09 16:26:07'),
-	(19, 'Zacayoyo', 'zacayoyo.1@gmail.com', '$2y$10$1lHZM5TuzqnsL5Dq5q/6qupJO.sXLoe27iS79xRwIhlO7r0D5iPp.', 'Médico', '2024-11-18 14:02:26'),
-	(20, 'Chicheme Chorrerano', 'chichemito.chorrerano@gmail.com', '$2y$10$wNWOlSe/d17Hvu7HQUgP3eh2WKI0Ia1qLAe7qxpPuYwoOsGqtXmLG', 'Paciente', '2024-11-18 14:06:08');
+-- Volcando datos para la tabla gestion_clinica.usuarios: ~6 rows (aproximadamente)
+INSERT INTO `usuarios` (`usuario_id`, `nombre`, `email`, `contrasena`, `rol`, `restablecer`, `fecha_creacion`) VALUES
+	(4, 'Pedrito', 'didiervillalaz04@gmail.com', '$2y$10$RzmqVBekNoYqP8X5ZUHKDOTRm6ovyShL9oIa.aYjcCKjetYCKRkQG', 'Administrador', NULL, '2024-10-09 01:44:47'),
+	(5, 'Jose Macre', 'macremoises@gmail.com', '$2y$10$zawlKuudQompLJoNHmdWiOYvW.claS5sXTHbDN6my7LewBS92D0sW', 'Administrador', NULL, '2024-10-31 13:46:35'),
+	(13, 'Alberto', 'carv2012@gmail.com', '$2y$10$7b1EnmHLFZomz7wxJ9v8/u1sNPWhahQQ4z9i/y0T1xXAny6qJ0Hsu', 'Paciente', NULL, '2024-10-31 19:16:06'),
+	(14, 'Luis', 'luismurcia0106@gmail.com', '$2y$10$wfC05QY.gONYAYbndQSCeOPKs9UkdcCtKSVwM/TgRoVGiELlDKoPO', 'Administrador', NULL, '2024-11-02 20:07:30'),
+	(16, 'Carlos Alberto', 'carv2011@gmail.com', '$2y$10$V4XMD3n8vuTmPYowXjnqT.iXKMgflVEzpNfn.ouHl9Q3TzDtehXjq', 'Médico', '8ebda540cbcc4d7336496819a46a1b68', '2024-11-09 16:08:57'),
+	(18, 'Jaider Rico', 'jaider.rico@gmail.com', '$2y$10$G9Pp6s7xiTkiq8XgSfjojulie4lR21ur88ko07PKYA2LikgqkQw1q', 'Recepcionista', NULL, '2024-11-09 16:26:07');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
