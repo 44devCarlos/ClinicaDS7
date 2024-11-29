@@ -33,9 +33,64 @@ if (!$paciente_id) {
 $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
 ?>
 
-<a href="../inicio/inicio_paciente.php" class="btn btn-secondary my-3 mx-4">Regresar</a>
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Color de fondo suave */
+    color: #343a40; /* Color de texto */
+    overflow-x: hidden; /* Evitar el scroll horizontal */
+}
+.container8 {
+    margin-top: -171px; /* Espaciado superior */
+    width: 100%; /* Ancho completo */
+    max-width: auto;
+    max-width: 1200px; /* Limitar el ancho máximo */
+    margin-left: auto; /* Centrando el contenedor */
+    margin-right: 370px; /* Centrando el contenedor */
+    padding: 270.5px;
+}
+.table {
+    width: 100%; /* Ancho completo */
+    margin: 20px 0; /* Espaciado superior e inferior */
+    border-collapse: collapse; /* Colapsar bordes */
+    margin-top: 20px;
+}
 
-<section class="container mt-5">
+/* Estilos para las cabeceras de la tabla */
+.table thead th {
+    background-color: #0B3E57; /* Color de fondo azul */
+    color: white; /* Color de texto blanco */
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Centrar texto */
+}
+
+/* Estilos para las filas de la tabla */
+.table tbody tr {
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+.table tbody tr:hover {
+    background-color: #e9ecef; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilos para las celdas de la tabla */
+.table td {
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #dee2e6; /* Bordes de las celdas */
+    text-align: center; /* Centrar texto */
+}
+
+.btn1{
+    background-color: #2e708a; /* Color de fondo rojo */
+    border: none; /* Sin borde */
+    color: white; /* Color de texto blanco */
+    padding: 8px 12px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s, transform 0.2s; /* Transición suave */
+}
+</style>
+
+<section class="container8 mt-3">
     <h1 class="text-center">Citas Atendidas</h1>
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
@@ -59,7 +114,7 @@ $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
                                     <input type="hidden" name="cita_id" value="<?php echo htmlspecialchars($cita["cita_id"]); ?>">
                                     <input type="hidden" name="paciente_id" value="<?php echo htmlspecialchars($paciente_id); ?>">
                                     <input type="hidden" name="amount" value="<?php echo htmlspecialchars($cita["costo"]); ?>">
-                                    <button type="submit" class="btn btn-warning">Pagar</button>
+                                    <button type="submit" class="btn1">Pagar</button>
                                 </form>
                             </td>
                         </tr>
