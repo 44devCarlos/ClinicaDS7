@@ -1,7 +1,87 @@
 <?php require("../../template/header.php"); ?>
+<style>
+    /* Estilos generales para el cuerpo */
+    body {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa; /* Color de fondo suave */
+        color: #343a40; /* Color de texto */
+        overflow-x: hidden; /* Evitar el scroll horizontal */
+    }
 
+    /* Estilos para el contenedor de la sección */
+    .container2 {
+        flex: 1;
+        width: 1700px; /* Ancho completo */
+        margin: 0 auto; /* Centrando el contenedor */
+        padding: 30px; /* Espaciado interno */
+        background-color: #ffffff; /* Fondo blanco */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
+    .content {
+            flex: 1; /* Permite que el contenido ocupe el espacio disponible */
+        }
+    /* Estilos para los títulos */
+    .text-center h1 {
+        font-size: 28px; /* Tamaño de fuente más grande */
+        color: #0B3E57; /* Color azul */
+        margin-bottom: 30px; /* Espaciado inferior */
+    }
 
-<section class="container">
+    /* Estilos para los formularios */
+    .form-label {
+        font-weight: bold; /* Texto en negrita */
+        color: #343a40; /* Color del texto */
+    }
+
+    .form-control, .form-select {
+        padding: 12px; /* Espaciado interno */
+        border: 1px solid #dee2e6; /* Bordes */
+        border-radius: 5px; /* Bordes redondeados */
+        transition: border-color 0.3s; /* Transición de borde */
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #0B3E57; /* Color del borde al enfocar */
+        box-shadow: 0 0 5px rgba(11, 62, 87, 0.3); /* Sombra al enfocar */
+    }
+
+    /* Estilos para los botones */
+    .btn-primary, .btn-secondary {
+        width: 100%; /* Botones del mismo ancho */
+        padding: 12px; /* Espaciado interno */
+        font-size: 16px; /* Tamaño de fuente */
+        border-radius: 5px; /* Bordes redondeados */
+        transition: background-color 0.3s, transform 0.2s; /* Transiciones suaves */
+    }
+
+    button.btn-primary {
+        background-color: #0B3E57; /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+         /* Color del borde */
+    }
+
+    button.btn-primary:hover {
+        background-color: #2E708A; /* Color azul */
+        border-color: #2E708A;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
+    }
+    button.btn-primary:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
+    }
+    /* Espaciado entre campos del formulario */
+    .mb-3 {
+        margin-bottom: 20px; /* Espaciado inferior */
+    }
+</style>
+<div class="content">
+<section class="container2">
     <div class="row d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-md-6 col-lg-4">
             <h1 class="text-center mb-5">Registrar Paciente</h1>
@@ -48,13 +128,9 @@
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">Registrar Paciente</button>
                 </div>
-
-                <div class="text-center mt-2">
-                    <a href="../inicio/inicio_recepcionista.php" class="btn btn-secondary my-3 mx-4">Regresar</a>
-                </div>
             </form>
         </div>
     </div>
 </section>
-
+</div>
 <?php require("../../template/footer.php"); ?>

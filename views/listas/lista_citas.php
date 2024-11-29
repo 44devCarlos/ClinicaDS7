@@ -29,7 +29,7 @@ body {
 .container3 {
     margin-top: -171px; /* Espaciado superior */
     width: 100%; /* Ancho completo */
-    max-width: ;
+    max-width: auto;
     max-width: 1200px; /* Limitar el ancho máximo */
     margin-left: auto; /* Centrando el contenedor */
     margin-right: 370px; /* Centrando el contenedor */
