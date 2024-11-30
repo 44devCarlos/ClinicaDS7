@@ -2,6 +2,7 @@
 include "../includes/Database.php";
 include "../includes/usuarios.php";
 include "../includes/Pacientes.php";
+include "../includes/Correo.php";
 
 // Crear una instancia de la clase Database y obtener la conexión
 $database = new Database();
@@ -9,6 +10,7 @@ $db = $database->getConnection();
 
 $usuarios = new Usuarios($db);
 $pacientes = new Pacientes($db);
+$correo = new Correo($db);
 
 $pacientes->nombre = $_POST['nombre'];
 $pacientes->cedula = $_POST['cedula'];
