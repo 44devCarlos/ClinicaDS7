@@ -67,9 +67,9 @@ require("../../template/header.php");
 
                 <!-- Datos Básicos del Paciente -->
                 <h3 class="mt-4">Datos Básicos del Paciente</h3>
-                <div class="form-group" style="display: none;" >
+                <div class="form-group" style="display: none;">
                     <label for="paciente_id">ID del Paciente:</label>
-                    <input type="text" id="paciente_id" name="paciente_id" class="form-control"readonly value="<?php echo htmlspecialchars($paciente_data['paciente_id']); ?>">
+                    <input type="text" id="paciente_id" name="paciente_id" class="form-control" readonly value="<?php echo htmlspecialchars($paciente_data['paciente_id']); ?>">
                 </div>
 
                 <div class="form-group">
@@ -108,20 +108,20 @@ require("../../template/header.php");
 
                 <div class="form-group">
                     <label for="altura">Altura (cm):</label>
-                    <input type="text" id="altura" name="altura" class="form-control" 
-                    value="<?php echo isset($datos_medicos->altura) ? htmlspecialchars($datos_medicos->altura) : ''; ?>" readonly required>
+                    <input type="text" id="altura" name="altura" class="form-control"
+                        value="<?php echo isset($datos_medicos->altura) ? htmlspecialchars($datos_medicos->altura) : ''; ?>" readonly required>
                 </div>
 
                 <div class="form-group">
                     <label for="peso">Peso (kg):</label>
-                    <input type="text" id="peso" name="peso" class="form-control" 
-                    value="<?php echo isset($datos_medicos->peso) ? htmlspecialchars($datos_medicos->peso) : ''; ?>" readonly required>
+                    <input type="text" id="peso" name="peso" class="form-control"
+                        value="<?php echo isset($datos_medicos->peso) ? htmlspecialchars($datos_medicos->peso) : ''; ?>" readonly required>
                 </div>
 
                 <div class="form-group">
                     <label for="tipo_sangre">Tipo de Sangre:</label>
-                    <input type="text" id="tipo_sangre" name="tipo_sangre" class="form-control" 
-                    value="<?php echo isset($datos_medicos->tipo_sangre) ? htmlspecialchars($datos_medicos->tipo_sangre) : ''; ?>" readonly required>
+                    <input type="text" id="tipo_sangre" name="tipo_sangre" class="form-control"
+                        value="<?php echo isset($datos_medicos->tipo_sangre) ? htmlspecialchars($datos_medicos->tipo_sangre) : ''; ?>" readonly required>
                 </div>
                 <div class="form-group">
                     <label for="alergias">Alergias:</label>
@@ -171,91 +171,102 @@ require("../../template/header.php");
                     </div>
                 </div>
                 <div>
-                <!-- Botón para añadir otro medicamento -->
-                <button id="add-medicamento" type="button" class="btn btn-secondary" style="display: none;">Añadir otro medicamento</button>
+                    <!-- Botón para añadir otro medicamento -->
+                    <button id="add-medicamento" type="button" class="btn btn-secondary" style="display: none;">Añadir otro medicamento</button>
                 </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Guardar Atención</button>
+                <button type="submit" class="btn btn-primary mt-3">Guardar Atención</button>
             </form>
         </div>
     </div>
 </section>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const diagnosticosContainer = document.getElementById('diagnosticos-container');
-    const addDiagnosticoButton = document.getElementById('add-diagnostico');
-    let padecimientosSeleccionados = new Set(); // Conjunto para los diagnósticos seleccionados
+    document.addEventListener('DOMContentLoaded', function() {
+        const diagnosticosContainer = document.getElementById('diagnosticos-container');
+        const addDiagnosticoButton = document.getElementById('add-diagnostico');
+        let padecimientosSeleccionados = new Set(); // Conjunto para los diagnósticos seleccionados
 
-    // Función para ocultar el botón si no hay opciones disponibles
-    const verificarOpcionesRestantes = () => {
-        const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
-        const totalOptions = Array.from(selects[0].options).length - 1; // Excluir el "Seleccione un diagnóstico"
-        if (padecimientosSeleccionados.size >= totalOptions) {
-            addDiagnosticoButton.style.display = 'none'; // Ocultar el botón si se seleccionaron todos
-        } else {
-            addDiagnosticoButton.style.display = 'inline-block'; // Mostrar el botón si hay opciones restantes
-        }
-    };
+        // Función para ocultar el botón si no hay opciones disponibles
+        const verificarOpcionesRestantes = () => {
+            const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
+            const totalOptions = Array.from(selects[0].options).length - 1; // Excluir el "Seleccione un diagnóstico"
+            if (padecimientosSeleccionados.size >= totalOptions) {
+                addDiagnosticoButton.style.display = 'none'; // Ocultar el botón si se seleccionaron todos
+            } else {
+                addDiagnosticoButton.style.display = 'inline-block'; // Mostrar el botón si hay opciones restantes
+            }
+        };
 
-    // Función para actualizar las opciones de todos los selects
-    const actualizarOpciones = () => {
-        const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
+        // Función para actualizar las opciones de todos los selects
+        const actualizarOpciones = () => {
+            const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
 
-        selects.forEach(select => {
-            const currentValue = select.value; // Diagnóstico actual seleccionado en este select
-            Array.from(select.options).forEach(option => {
-                // Si el diagnóstico está seleccionado en otro lugar, ocultarlo, excepto si es el actual
-                if (padecimientosSeleccionados.has(option.value) && option.value !== currentValue) {
-                    option.style.display = 'none';
-                } else {
-                    option.style.display = ''; // Mostrar opciones no seleccionadas
+            // Limpiar y reconstruir el conjunto de diagnósticos seleccionados
+            padecimientosSeleccionados.clear();
+            selects.forEach(select => {
+                if (select.value) {
+                    padecimientosSeleccionados.add(select.value);
                 }
             });
+
+            // Actualizar las opciones en cada select
+            selects.forEach(select => {
+                const currentValue = select.value; // Diagnóstico actual seleccionado en este select
+                Array.from(select.options).forEach(option => {
+                    // Si el diagnóstico está seleccionado en otro lugar, ocultarlo, excepto si es el actual
+                    if (padecimientosSeleccionados.has(option.value) && option.value !== currentValue) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = 'inline-block'; // Mostrar opciones no seleccionadas
+                    }
+                });
+            });
+
+            verificarOpcionesRestantes(); // Revisar si debe ocultarse el botón
+        };
+
+
+        // Detectar cambios en los selects
+        diagnosticosContainer.addEventListener('change', function(e) {
+            if (e.target && e.target.name === "diagnostico[]") {
+                const select = e.target;
+                const selectedValue = select.value;
+
+                // Remover el valor anterior si existe y es diferente al nuevo valor
+                const previousValue = Array.from(select.options).find(option => option.selected && option.value !== selectedValue)?.value;
+                if (previousValue) {
+                    padecimientosSeleccionados.delete(previousValue);
+                }
+
+                // Validar si el diagnóstico ya fue seleccionado en otro lugar
+                if (selectedValue && padecimientosSeleccionados.has(selectedValue)) {
+                    alert('Este diagnóstico ya ha sido seleccionado.');
+                    select.value = ""; // Restablecer el select
+                } else {
+                    // Agregar el nuevo valor al conjunto si es válido
+                    if (selectedValue) {
+                        padecimientosSeleccionados.add(selectedValue);
+                    }
+
+                    actualizarOpciones(); // Actualizar las opciones disponibles
+                }
+            }
         });
 
-        verificarOpcionesRestantes(); // Revisar si debe ocultarse el botón
-    };
 
-    // Detectar cambios en los selects
-    diagnosticosContainer.addEventListener('change', function (e) {
-        if (e.target && e.target.name === "diagnostico[]") {
-            const select = e.target;
-            const selectedValue = select.value;
-
-            // Validar si el diagnóstico ya fue seleccionado en otro lugar
-            if (padecimientosSeleccionados.has(selectedValue)) {
-                alert('Este diagnóstico ya ha sido seleccionado.');
-                select.value = ""; // Restablecer el select
-            } else {
-                // Remover el valor anterior si cambia la selección
-                const previousValue = Array.from(select.options).find(option => option.selected && option.value !== selectedValue);
-                if (previousValue) {
-                    padecimientosSeleccionados.delete(previousValue.value);
-                }
-
-                // Agregar el nuevo valor al conjunto
-                if (selectedValue) {
-                    padecimientosSeleccionados.add(selectedValue);
-                }
-
-                actualizarOpciones(); // Actualizar las opciones disponibles
+        // Manejar el clic del botón "Añadir Padecimiento"
+        addDiagnosticoButton.addEventListener('click', function() {
+            // Validar que el último diagnóstico tenga un valor seleccionado
+            const lastSelect = diagnosticosContainer.querySelector('.diagnostico-item:last-child select');
+            if (!lastSelect || !lastSelect.value) {
+                alert('Debe seleccionar un diagnóstico válido antes de agregar otro.');
+                return;
             }
-        }
-    });
 
-    // Manejar el clic del botón "Añadir Padecimiento"
-    addDiagnosticoButton.addEventListener('click', function () {
-        // Validar que el último diagnóstico tenga un valor seleccionado
-        const lastSelect = diagnosticosContainer.querySelector('.diagnostico-item:last-child select');
-        if (!lastSelect || !lastSelect.value) {
-            alert('Debe seleccionar un diagnóstico válido antes de agregar otro.');
-            return;
-        }
-
-        // Crear un nuevo selector para diagnósticos
-        const newDiagnostico = document.createElement('div');
-        newDiagnostico.classList.add('form-group', 'diagnostico-item');
-        newDiagnostico.innerHTML = `
+            // Crear un nuevo selector para diagnósticos
+            const newDiagnostico = document.createElement('div');
+            newDiagnostico.classList.add('form-group', 'diagnostico-item');
+            newDiagnostico.innerHTML = `
             <label for="diagnostico">Diagnóstico:</label>
             <select id="diagnostico" name="diagnostico[]" class="form-control" required>
                 <option value="" disabled selected>Seleccione un diagnóstico</option>
@@ -267,88 +278,88 @@ require("../../template/header.php");
             </select>
         `;
 
-        // Agregar el nuevo selector al contenedor
-        diagnosticosContainer.appendChild(newDiagnostico);
+            // Agregar el nuevo selector al contenedor
+            diagnosticosContainer.appendChild(newDiagnostico);
 
-        actualizarOpciones(); // Actualizar las opciones disponibles en todos los selects
+            actualizarOpciones(); // Actualizar las opciones disponibles en todos los selects
+        });
+
+        // Inicializar opciones y validaciones al cargar la página
+        actualizarOpciones();
+
+        // Verificar si ya hay un padecimiento seleccionado al cargar la página
+        const primerSelect = diagnosticosContainer.querySelector('select[name="diagnostico[]"]');
+        if (primerSelect && primerSelect.value) {
+            addDiagnosticoButton.style.display = 'inline-block'; // Mostrar el botón si ya hay un padecimiento seleccionado
+        } else {
+            addDiagnosticoButton.style.display = 'none'; // Mantener el botón oculto si no hay selección
+        }
     });
-
-    // Inicializar opciones y validaciones al cargar la página
-    actualizarOpciones();
-
-    // Verificar si ya hay un padecimiento seleccionado al cargar la página
-    const primerSelect = diagnosticosContainer.querySelector('select[name="diagnostico[]"]');
-    if (primerSelect && primerSelect.value) {
-        addDiagnosticoButton.style.display = 'inline-block'; // Mostrar el botón si ya hay un padecimiento seleccionado
-    } else {
-        addDiagnosticoButton.style.display = 'none'; // Mantener el botón oculto si no hay selección
-    }
-});
 </script>
 
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const medicamentosContainer = document.getElementById('medicamentos-container');
-    const addMedicamentoButton = document.getElementById('add-medicamento');
-    const medicamentosSeleccionados = new Set(); // Para almacenar medicamentos seleccionados
+    document.addEventListener('DOMContentLoaded', function() {
+        const medicamentosContainer = document.getElementById('medicamentos-container');
+        const addMedicamentoButton = document.getElementById('add-medicamento');
+        const medicamentosSeleccionados = new Set(); // Para almacenar medicamentos seleccionados
 
-    // Función para mostrar el tratamiento
-    const mostrarTratamiento = (medicamentoId, tratamientoContainer) => {
-        const spinner = tratamientoContainer.querySelector('.spinner');
-        const textarea = tratamientoContainer.querySelector('textarea');
+        // Función para mostrar el tratamiento
+        const mostrarTratamiento = (medicamentoId, tratamientoContainer) => {
+            const spinner = tratamientoContainer.querySelector('.spinner');
+            const textarea = tratamientoContainer.querySelector('textarea');
 
-        spinner.style.display = 'block';
-        textarea.style.display = 'none';
+            spinner.style.display = 'block';
+            textarea.style.display = 'none';
 
-        fetch(`../../ajax/get_tratamiento.php?medicamento_id=${medicamentoId}`)
-            .then(response => response.json())
-            .then(data => {
-                const tratamiento = data.tratamiento || "Tratamiento no disponible";
-                textarea.value = tratamiento;
-                spinner.style.display = 'none';
-                textarea.style.display = 'block';
-            })
-            .catch(error => {
-                console.error('Error al obtener el tratamiento:', error);
-                textarea.value = "Error al cargar el tratamiento.";
-                spinner.style.display = 'none';
-                textarea.style.display = 'block';
+            fetch(`../../ajax/get_tratamiento.php?medicamento_id=${medicamentoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tratamiento = data.tratamiento || "Tratamiento no disponible";
+                    textarea.value = tratamiento;
+                    spinner.style.display = 'none';
+                    textarea.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error al obtener el tratamiento:', error);
+                    textarea.value = "Error al cargar el tratamiento.";
+                    spinner.style.display = 'none';
+                    textarea.style.display = 'block';
+                });
+        };
+
+        // Función para actualizar las opciones de todos los selects
+        const actualizarOpciones = () => {
+            const todosLosSelects = medicamentosContainer.querySelectorAll('select');
+            let totalOpcionesDisponibles = 0; // Contador de opciones disponibles
+
+            todosLosSelects.forEach(select => {
+                const opciones = select.querySelectorAll('option');
+                opciones.forEach(opcion => {
+                    if (opcion.value && medicamentosSeleccionados.has(opcion.value)) {
+                        opcion.style.display = 'none'; // Ocultar medicamentos ya seleccionados
+                    } else if (opcion.value) {
+                        opcion.style.display = 'block'; // Mostrar medicamentos disponibles
+                        totalOpcionesDisponibles++;
+                    }
+                });
             });
-    };
 
-    // Función para actualizar las opciones de todos los selects
-    const actualizarOpciones = () => {
-        const todosLosSelects = medicamentosContainer.querySelectorAll('select');
-        let totalOpcionesDisponibles = 0; // Contador de opciones disponibles
+            // Si ya no hay opciones disponibles, ocultamos el botón
+            if (totalOpcionesDisponibles > 0) {
+                addMedicamentoButton.style.display = 'inline-block'; // Mostrar botón
+            } else {
+                addMedicamentoButton.style.display = 'none'; // Ocultar botón
+            }
+        };
 
-        todosLosSelects.forEach(select => {
-            const opciones = select.querySelectorAll('option');
-            opciones.forEach(opcion => {
-                if (opcion.value && medicamentosSeleccionados.has(opcion.value)) {
-                    opcion.style.display = 'none'; // Ocultar medicamentos ya seleccionados
-                } else if (opcion.value) {
-                    opcion.style.display = 'block'; // Mostrar medicamentos disponibles
-                    totalOpcionesDisponibles++;
-                }
-            });
-        });
+        // Función para agregar un nuevo medicamento
+        const agregarMedicamento = () => {
+            const nuevoMedicamentoItem = document.createElement('div');
+            nuevoMedicamentoItem.classList.add('medicamento-item');
 
-        // Si ya no hay opciones disponibles, ocultamos el botón
-        if (totalOpcionesDisponibles > 0) {
-            addMedicamentoButton.style.display = 'inline-block'; // Mostrar botón
-        } else {
-            addMedicamentoButton.style.display = 'none'; // Ocultar botón
-        }
-    };
-
-    // Función para agregar un nuevo medicamento
-    const agregarMedicamento = () => {
-        const nuevoMedicamentoItem = document.createElement('div');
-        nuevoMedicamentoItem.classList.add('medicamento-item');
-
-        nuevoMedicamentoItem.innerHTML = `
+            nuevoMedicamentoItem.innerHTML = `
             <div class="form-group">
                 <label for="medicamento">Seleccione el Medicamento:</label>
                 <select name="medicamento[]" class="form-control" required>
@@ -369,53 +380,51 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        medicamentosContainer.appendChild(nuevoMedicamentoItem);
+            medicamentosContainer.appendChild(nuevoMedicamentoItem);
 
-        const medicamentoSelect = nuevoMedicamentoItem.querySelector('select');
-        const tratamientoContainer = nuevoMedicamentoItem.querySelector('.tratamiento-container');
+            const medicamentoSelect = nuevoMedicamentoItem.querySelector('select');
+            const tratamientoContainer = nuevoMedicamentoItem.querySelector('.tratamiento-container');
 
-        // Evento al cambiar el select
-        medicamentoSelect.addEventListener('change', function () {
-            const medicamentoId = this.value;
+            // Evento al cambiar el select
+            medicamentoSelect.addEventListener('change', function() {
+                const medicamentoId = this.value;
 
-            if (medicamentoId) {
-                medicamentosSeleccionados.add(medicamentoId);
-                tratamientoContainer.style.display = 'block';
-                mostrarTratamiento(medicamentoId, tratamientoContainer);
-                actualizarOpciones(); // Actualiza las opciones de todos los selects
-            }
-        });
+                if (medicamentoId) {
+                    medicamentosSeleccionados.add(medicamentoId);
+                    tratamientoContainer.style.display = 'block';
+                    mostrarTratamiento(medicamentoId, tratamientoContainer);
+                    actualizarOpciones(); // Actualiza las opciones de todos los selects
+                }
+            });
 
-        actualizarOpciones(); // Actualiza las opciones al agregar un nuevo select
-    };
+            actualizarOpciones(); // Actualiza las opciones al agregar un nuevo select
+        };
 
-    // Manejar el primer `select` ya existente
-    const primerSelect = medicamentosContainer.querySelector('select');
-    const primerTratamientoContainer = medicamentosContainer.querySelector('.tratamiento-container');
+        // Manejar el primer `select` ya existente
+        const primerSelect = medicamentosContainer.querySelector('select');
+        const primerTratamientoContainer = medicamentosContainer.querySelector('.tratamiento-container');
 
-    if (primerSelect) {
-        primerSelect.addEventListener('change', function () {
-            const medicamentoId = this.value;
+        if (primerSelect) {
+            primerSelect.addEventListener('change', function() {
+                const medicamentoId = this.value;
 
-            if (medicamentoId) {
-                medicamentosSeleccionados.add(medicamentoId);
-                primerTratamientoContainer.style.display = 'block';
-                mostrarTratamiento(medicamentoId, primerTratamientoContainer);
-                actualizarOpciones(); // Actualizar las opciones después de seleccionar
-            }
-        });
+                if (medicamentoId) {
+                    medicamentosSeleccionados.add(medicamentoId);
+                    primerTratamientoContainer.style.display = 'block';
+                    mostrarTratamiento(medicamentoId, primerTratamientoContainer);
+                    actualizarOpciones(); // Actualizar las opciones después de seleccionar
+                }
+            });
 
-        actualizarOpciones(); // Asegurar que las opciones se actualizan al cargar
-    }
+            actualizarOpciones(); // Asegurar que las opciones se actualizan al cargar
+        }
 
-    // Manejar el clic en "Añadir otro medicamento"
-    addMedicamentoButton.addEventListener('click', agregarMedicamento);
+        // Manejar el clic en "Añadir otro medicamento"
+        addMedicamentoButton.addEventListener('click', agregarMedicamento);
 
-    // Ocultar el botón inicialmente
-    addMedicamentoButton.style.display = 'none';
-});
-
-
+        // Ocultar el botón inicialmente
+        addMedicamentoButton.style.display = 'none';
+    });
 </script>
 
 
