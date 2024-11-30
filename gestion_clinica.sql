@@ -243,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   KEY `paciente_id` (`paciente_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.facturas: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla gestion_clinica.facturas: ~0 rows (aproximadamente)
 INSERT INTO `facturas` (`factura_id`, `paciente_id`, `fecha_emision`, `monto`, `estado`) VALUES
 	(5, 8, '2024-11-02 19:13:13', 30.00, 'Pagado'),
 	(6, 8, '2024-11-28 10:14:15', 30.00, 'Pagado');
@@ -626,6 +626,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `restablecer` text DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`usuario_id`),
+  UNIQUE KEY `email` (`email`),
   KEY `FK_usuarios_roles` (`rol`),
   CONSTRAINT `FK_usuarios_roles` FOREIGN KEY (`rol`) REFERENCES `roles` (`rol`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
