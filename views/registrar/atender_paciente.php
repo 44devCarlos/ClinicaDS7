@@ -300,76 +300,96 @@ require("../../template/header.php");
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const medicamentosContainer = document.getElementById('medicamentos-container');
-        const addMedicamentoButton = document.getElementById('add-medicamento');
-        const medicamentosSeleccionados = new Set(); // Para almacenar medicamentos seleccionados
+   document.addEventListener('DOMContentLoaded', function () {
+    const medicamentosContainer = document.getElementById('medicamentos-container');
+    const addMedicamentoButton = document.getElementById('add-medicamento');
+    const medicamentosSeleccionados = new Set(); // Para almacenar medicamentos seleccionados
+    let medicamentosDisponibles = []; // Para almacenar los medicamentos cargados por AJAX
 
-        // Función para mostrar el tratamiento
-        const mostrarTratamiento = (medicamentoId, tratamientoContainer) => {
-            const spinner = tratamientoContainer.querySelector('.spinner');
-            const textarea = tratamientoContainer.querySelector('textarea');
-
-            spinner.style.display = 'block';
-            textarea.style.display = 'none';
-
-            fetch(`../../ajax/get_tratamiento.php?medicamento_id=${medicamentoId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const tratamiento = data.tratamiento || "Tratamiento no disponible";
-                    textarea.value = tratamiento;
-                    spinner.style.display = 'none';
-                    textarea.style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error al obtener el tratamiento:', error);
-                    textarea.value = "Error al cargar el tratamiento.";
-                    spinner.style.display = 'none';
-                    textarea.style.display = 'block';
-                });
-        };
-
-        // Función para actualizar las opciones de todos los selects
-        const actualizarOpciones = () => {
-            const todosLosSelects = medicamentosContainer.querySelectorAll('select');
-            let totalOpcionesDisponibles = 0; // Contador de opciones disponibles
-
-            todosLosSelects.forEach(select => {
-                const opciones = select.querySelectorAll('option');
-                opciones.forEach(opcion => {
-                    if (opcion.value && medicamentosSeleccionados.has(opcion.value)) {
-                        opcion.style.display = 'none'; // Ocultar medicamentos ya seleccionados
-                    } else if (opcion.value) {
-                        opcion.style.display = 'block'; // Mostrar medicamentos disponibles
-                        totalOpcionesDisponibles++;
-                    }
-                });
+    // Función para cargar medicamentos por padecimiento vía AJAX
+    const cargarMedicamentosPorPadecimiento = (id_padecimiento) => {
+        return fetch(`../../ajax/get_medicamentos.php?padecimiento_id=${id_padecimiento}`)
+            .then(response => response.json())
+            .then(data => {
+                return data.medicamentos || [];
+            })
+            .catch(error => {
+                console.error('Error al obtener los medicamentos:', error);
+                return [];
             });
+    };
 
-            // Si ya no hay opciones disponibles, ocultamos el botón
-            if (totalOpcionesDisponibles > 0) {
-                addMedicamentoButton.style.display = 'inline-block'; // Mostrar botón
-            } else {
-                addMedicamentoButton.style.display = 'none'; // Ocultar botón
-            }
-        };
+    // Función para llenar un select con los medicamentos disponibles
+    const llenarSelectMedicamentos = (select, medicamentos) => {
+        select.innerHTML = `
+            <option value="" disabled selected>Seleccione un medicamento</option>
+        `;
+        medicamentos.forEach(medicamento => {
+            const option = document.createElement('option');
+            option.value = medicamento.medicamento_id;
+            option.textContent = medicamento.nombre;
+            select.appendChild(option);
+        });
+    };
 
-        // Función para agregar un nuevo medicamento
-        const agregarMedicamento = () => {
-            const nuevoMedicamentoItem = document.createElement('div');
-            nuevoMedicamentoItem.classList.add('medicamento-item');
+    // Función para mostrar el tratamiento
+    const mostrarTratamiento = (medicamentoId, tratamientoContainer) => {
+        const spinner = tratamientoContainer.querySelector('.spinner');
+        const textarea = tratamientoContainer.querySelector('textarea');
 
-            nuevoMedicamentoItem.innerHTML = `
+        spinner.style.display = 'block';
+        textarea.style.display = 'none';
+
+        fetch(`../../ajax/get_tratamiento.php?medicamento_id=${medicamentoId}`)
+            .then(response => response.json())
+            .then(data => {
+                const tratamiento = data.tratamiento || "Tratamiento no disponible";
+                textarea.value = tratamiento;
+                spinner.style.display = 'none';
+                textarea.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error al obtener el tratamiento:', error);
+                textarea.value = "Error al cargar el tratamiento.";
+                spinner.style.display = 'none';
+                textarea.style.display = 'block';
+            });
+    };
+
+    // Función para actualizar las opciones de todos los selects
+    const actualizarOpciones = () => {
+        const todosLosSelects = medicamentosContainer.querySelectorAll('select');
+        let totalOpcionesDisponibles = 0; // Contador de opciones disponibles
+
+        todosLosSelects.forEach(select => {
+            const opciones = select.querySelectorAll('option');
+            opciones.forEach(opcion => {
+                if (opcion.value && medicamentosSeleccionados.has(opcion.value)) {
+                    opcion.style.display = 'none'; // Ocultar medicamentos ya seleccionados
+                } else if (opcion.value) {
+                    opcion.style.display = 'block'; // Mostrar medicamentos disponibles
+                    totalOpcionesDisponibles++;
+                }
+            });
+        });
+
+        // Si ya no hay opciones disponibles, ocultamos el botón
+        if (totalOpcionesDisponibles > 0) {
+            addMedicamentoButton.style.display = 'inline-block'; // Mostrar botón
+        } else {
+            addMedicamentoButton.style.display = 'none'; // Ocultar botón
+        }
+    };
+
+    // Función para agregar un nuevo medicamento
+    const agregarMedicamento = () => {
+        const nuevoMedicamentoItem = document.createElement('div');
+        nuevoMedicamentoItem.classList.add('medicamento-item');
+
+        nuevoMedicamentoItem.innerHTML = `
             <div class="form-group">
                 <label for="medicamento">Seleccione el Medicamento:</label>
-                <select name="medicamento[]" class="form-control" required>
-                    <option value="" disabled selected>Seleccione un medicamento</option>
-                    <?php foreach ($medicamentos as $medicamento): ?>
-                        <option value="<?php echo htmlspecialchars($medicamento['medicamento_id']); ?>">
-                            <?php echo htmlspecialchars($medicamento['nombre']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <select name="medicamento[]" class="form-control" required></select>
             </div>
             <div class="form-group tratamiento-container" style="display: none;">
                 <label for="tratamiento">Tratamiento:</label>
@@ -380,51 +400,73 @@ require("../../template/header.php");
             </div>
         `;
 
-            medicamentosContainer.appendChild(nuevoMedicamentoItem);
+        medicamentosContainer.appendChild(nuevoMedicamentoItem);
 
-            const medicamentoSelect = nuevoMedicamentoItem.querySelector('select');
-            const tratamientoContainer = nuevoMedicamentoItem.querySelector('.tratamiento-container');
+        const medicamentoSelect = nuevoMedicamentoItem.querySelector('select');
+        const tratamientoContainer = nuevoMedicamentoItem.querySelector('.tratamiento-container');
 
-            // Evento al cambiar el select
-            medicamentoSelect.addEventListener('change', function() {
-                const medicamentoId = this.value;
+        // Cuando se cambia el diagnóstico
+        const diagnosticosContainer = document.getElementById('diagnosticos-container');
+        diagnosticosContainer.addEventListener('change', async (e) => {
+            if (e.target && e.target.name === "diagnostico[]") {
+                const padecimientoId = e.target.value;
+                const medicamentos = await cargarMedicamentosPorPadecimiento(padecimientoId);
+                llenarSelectMedicamentos(medicamentoSelect, medicamentos);
+            }
+        });
 
-                if (medicamentoId) {
-                    medicamentosSeleccionados.add(medicamentoId);
-                    tratamientoContainer.style.display = 'block';
-                    mostrarTratamiento(medicamentoId, tratamientoContainer);
-                    actualizarOpciones(); // Actualiza las opciones de todos los selects
-                }
-            });
+        // Evento al cambiar el select
+        medicamentoSelect.addEventListener('change', function () {
+            const medicamentoId = this.value;
 
-            actualizarOpciones(); // Actualiza las opciones al agregar un nuevo select
-        };
+            if (medicamentoId) {
+                medicamentosSeleccionados.add(medicamentoId);
+                tratamientoContainer.style.display = 'block';
+                mostrarTratamiento(medicamentoId, tratamientoContainer);
+                actualizarOpciones(); // Actualiza las opciones de todos los selects
+            }
+        });
 
-        // Manejar el primer `select` ya existente
-        const primerSelect = medicamentosContainer.querySelector('select');
-        const primerTratamientoContainer = medicamentosContainer.querySelector('.tratamiento-container');
+        actualizarOpciones(); // Actualiza las opciones al agregar un nuevo select
+    };
 
+    // Manejar el primer `select` ya existente
+    const primerSelect = medicamentosContainer.querySelector('select');
+    const primerTratamientoContainer = medicamentosContainer.querySelector('.tratamiento-container');
+
+    if (primerSelect) {
+        llenarSelectMedicamentos(primerSelect, medicamentosDisponibles); // Llenar el primer select
+
+        primerSelect.addEventListener('change', function () {
+            const medicamentoId = this.value;
+
+            if (medicamentoId) {
+                medicamentosSeleccionados.add(medicamentoId);
+                primerTratamientoContainer.style.display = 'block';
+                mostrarTratamiento(medicamentoId, primerTratamientoContainer);
+                actualizarOpciones(); // Actualizar las opciones después de seleccionar
+            }
+        });
+
+        actualizarOpciones(); // Asegurar que las opciones se actualizan al cargar
+    }
+
+    // Manejar el clic en "Añadir otro medicamento"
+    addMedicamentoButton.addEventListener('click', agregarMedicamento);
+
+    // Ocultar el botón inicialmente
+    addMedicamentoButton.style.display = 'none';
+
+    // Cargar medicamentos al iniciar
+    cargarMedicamentosPorPadecimiento().then(() => {
         if (primerSelect) {
-            primerSelect.addEventListener('change', function() {
-                const medicamentoId = this.value;
-
-                if (medicamentoId) {
-                    medicamentosSeleccionados.add(medicamentoId);
-                    primerTratamientoContainer.style.display = 'block';
-                    mostrarTratamiento(medicamentoId, primerTratamientoContainer);
-                    actualizarOpciones(); // Actualizar las opciones después de seleccionar
-                }
-            });
-
-            actualizarOpciones(); // Asegurar que las opciones se actualizan al cargar
+            llenarSelectMedicamentos(primerSelect, medicamentosDisponibles); // Asegurar que el primer select se llena
         }
-
-        // Manejar el clic en "Añadir otro medicamento"
-        addMedicamentoButton.addEventListener('click', agregarMedicamento);
-
-        // Ocultar el botón inicialmente
-        addMedicamentoButton.style.display = 'none';
+        actualizarOpciones(); // Verificar el estado del botón
     });
+});
+
+
 </script>
 
 
