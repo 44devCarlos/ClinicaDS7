@@ -81,7 +81,7 @@ class Correo
         }
     }
 
-    public function enviar_factura($email, $servicio, $cantidad)
+    public function enviar_factura($email, $servicio, $cantidad, Usuarios $usuario)
     {
         //Enviar email
         $mail = new PHPMailer(true);
@@ -100,11 +100,34 @@ class Correo
         //plantilla HTML
 
         $mensajeHTML = "
-                <p align='center'> 
-                <img src='https://utp.ac.pa/documentos/2015/imagen/logo_utp_1_72.png' width='100px' height='100px' >
-                </p>
-                <p align='center'>Servicio Ofrecido <b>$servicio</b></p>
-                <p align='center'>Monto de <b>$$cantidad</b></p>";
+        <div style='
+            font-family: Arial, sans-serif;
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;'>
+            <div style='margin-bottom: 20px;'>
+                <img src='https://i.ibb.co/9GWF8dh/Clinica-Vitalis-login.png' style='width: 300px; height: auto;'>
+            </div>
+            <h2 style='margin: 10px 0; color: #333;'>Factura</h2>
+            <p style='margin: 5px 0; font-size: 14px; color: #555;'>
+                Número de Factura: <b>149630</b>
+            </p>
+            <p style='margin: 5px 0; font-size: 14px; color: #555;'>
+                Usuario: <b>$usuario->nombre</b>
+            </p>
+            <p style='margin: 10px 0; font-size: 16px; font-weight: bold; color: #007BFF;'>
+                Servicio Ofrecido: <b>$servicio</b>
+            </p>
+            <p style='margin: 10px 0; font-size: 16px; font-weight: bold; color: #28A745;'>
+                Monto: <b>$$cantidad</b>
+            </p>
+        </div>";
+
 
 
         //Content
