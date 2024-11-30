@@ -66,7 +66,7 @@ INSERT INTO `citas` (`cita_id`, `fecha`, `hora`, `estado`, `medico_id`, `pacient
 	(4, '2024-11-09', NULL, 'No Agendada', NULL, 8, 1, 1, NULL),
 	(5, '2024-11-09', NULL, 'No Agendada', NULL, 8, 1, 1, NULL),
 	(6, '2024-11-28', NULL, 'No Agendada', NULL, 8, 1, 1, NULL),
-	(7, '2024-11-29', 8, 'Agendado', 16, 8, 1, 2, 'No Pagado');
+	(7, '2024-11-30', 8, 'Agendado', 16, 8, 1, 2, 'No Pagado');
 
 -- Volcando estructura para procedimiento gestion_clinica.ConsultarCitas
 DROP PROCEDURE IF EXISTS `ConsultarCitas`;
@@ -256,8 +256,7 @@ CREATE TABLE IF NOT EXISTS `farmacia` (
   `cantidad` int(11) DEFAULT NULL,
   `fecha_suministro` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`suministro_id`),
-  KEY `medicamento_id` (`medicamento_id`),
-  CONSTRAINT `farmacia_ibfk_1` FOREIGN KEY (`medicamento_id`) REFERENCES `medicamentos` (`medicamento_id`)
+  KEY `medicamento_id` (`medicamento_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla gestion_clinica.farmacia: ~0 rows (aproximadamente)
@@ -356,15 +355,50 @@ CREATE TABLE IF NOT EXISTS `medicamentos` (
   PRIMARY KEY (`medicamento_id`),
   KEY `id_padecimiento` (`id_padecimiento`),
   CONSTRAINT `FK_medicamentos_padecimiento` FOREIGN KEY (`id_padecimiento`) REFERENCES `padecimiento` (`id_padecimiento`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.medicamentos: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla gestion_clinica.medicamentos: ~40 rows (aproximadamente)
 INSERT INTO `medicamentos` (`medicamento_id`, `nombre`, `cantidad`, `unidad`, `tipo`, `tratamiento`, `id_padecimiento`) VALUES
-	(1, 'Paracetamol', 100, 'mg', NULL, NULL, NULL),
-	(2, 'Ibuprofeno', 20, 'mg', NULL, NULL, NULL),
-	(3, 'Amoxilicina', 50, 'mg', NULL, NULL, NULL),
-	(4, 'Aspirina', 20, 'mg', NULL, NULL, NULL),
-	(15, 'Amoxicilina', 100, 'mg', 'a', '1 cada 8 horas', 2);
+	(1, 'Loratadina', 50, 'mg', 'tableta', '1 tableta cada 12 horas', 3),
+	(2, 'Dextrometorfano', 30, 'mg', 'jarabe', '5 ml cada 8 horas', 3),
+	(3, 'Oseltamivir', 10, 'mg', 'tableta', '1 tableta cada 12 horas', 4),
+	(4, 'Vitamina C', 100, 'mg', 'tableta', '1 tableta diaria', 4),
+	(5, 'Ciprofloxacino', 20, 'mg', 'gotas óticas', '2 gotas cada 12 horas', 5),
+	(6, 'Naproxeno', 50, 'mg', 'tableta', '1 tableta cada 12 horas', 5),
+	(7, 'Benzocaína', 50, 'mg', 'pastillas', '1 pastilla cada 6 horas', 6),
+	(8, 'Flurbiprofeno', 20, 'mg', 'pastillas', '1 pastilla cada 8 horas', 6),
+	(9, 'Sumatriptán', 10, 'mg', 'tableta', '1 tableta al inicio del dolor', 7),
+	(10, 'Naproxeno sódico', 30, 'mg', 'tableta', '1 tableta cada 8 horas', 7),
+	(11, 'Metamizol', 100, 'mg', 'tableta', '1 tableta cada 12 horas', 8),
+	(12, 'Dipirona', 50, 'mg', 'tableta', '1 tableta cada 8 horas', 8),
+	(13, 'Hidrocortisona', 10, 'mg', 'crema', 'Aplicar cada 8 horas', 9),
+	(14, 'Calamina', 20, 'mg', 'loción', 'Aplicar cada 12 horas', 9),
+	(15, 'Metoclopramida', 50, 'mg', 'tableta', '1 tableta cada 8 horas', 10),
+	(16, 'Dimenhidrinato', 20, 'mg', 'tableta', '1 tableta cada 8 horas', 10),
+	(17, 'Lidocaína', 10, 'mg', 'inyección', 'Según necesidad', 11),
+	(18, 'Diclofenaco', 20, 'mg', 'inyección', 'Según indicación', 11),
+	(19, 'Tramadol', 50, 'mg', 'tableta', '1 tableta según emergencia', 12),
+	(20, 'Oxicodona', 10, 'mg', 'tableta', '1 tableta según emergencia', 12),
+	(21, 'Cinarizina', 25, 'mg', 'tableta', '1 tableta cada 12 horas', 13),
+	(22, 'Escopolamina', 10, 'mg', 'parche', '1 parche cada 72 horas', 13),
+	(23, 'Dexametasona', 10, 'mg', 'tableta', '1 tableta diaria', 14),
+	(24, 'Atorvastatina', 20, 'mg', 'tableta', '1 tableta diaria', 14),
+	(25, 'Ambroxol', 30, 'mg', 'jarabe', '5 ml cada 8 horas', 3),
+	(26, 'Acyclovir', 200, 'mg', 'tableta', '1 tableta cada 6 horas', 4),
+	(27, 'Amoxicilina', 500, 'mg', 'tableta', '1 tableta cada 8 horas', 6),
+	(28, 'Ibuprofeno', 200, 'mg', 'tableta', '1 tableta cada 6 horas', 5),
+	(29, 'Clorfenamina', 4, 'mg', 'tableta', '1 tableta cada 8 horas', 3),
+	(30, 'Ketorolaco', 10, 'mg', 'tableta', '1 tableta cada 6 horas', 7),
+	(31, 'Salbutamol', 100, 'mcg', 'inhalador', '2 inhalaciones cada 6 horas', 4),
+	(32, 'Carbamazepina', 200, 'mg', 'tableta', '1 tableta cada 12 horas', 7),
+	(33, 'Clotrimazol', 10, 'mg', 'crema', 'Aplicar 2 veces al día', 9),
+	(34, 'Eritromicina', 250, 'mg', 'tableta', '1 tableta cada 6 horas', 6),
+	(35, 'Domperidona', 10, 'mg', 'tableta', '1 tableta cada 8 horas', 10),
+	(36, 'Furosemida', 40, 'mg', 'tableta', '1 tableta diaria', 14),
+	(37, 'Betametasona', 4, 'mg', 'tableta', '1 tableta cada 12 horas', 9),
+	(38, 'Ranitidina', 150, 'mg', 'tableta', '1 tableta cada 12 horas', 10),
+	(39, 'Clonazepam', 2, 'mg', 'tableta', '1 tableta antes de dormir', 13),
+	(40, 'Fenitoína', 100, 'mg', 'tableta', '1 tableta cada 12 horas', 7);
 
 -- Volcando estructura para tabla gestion_clinica.medicos
 DROP TABLE IF EXISTS `medicos`;
@@ -475,12 +509,24 @@ CREATE TABLE IF NOT EXISTS `padecimiento` (
   `id_padecimiento` int(11) NOT NULL AUTO_INCREMENT,
   `padecimiento` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_padecimiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla gestion_clinica.padecimiento: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla gestion_clinica.padecimiento: ~14 rows (aproximadamente)
 INSERT INTO `padecimiento` (`id_padecimiento`, `padecimiento`) VALUES
 	(1, 'Dolor de Cabeza'),
-	(2, 'Dolor de garganta');
+	(2, 'Dolor de garganta'),
+	(3, 'Resfriados'),
+	(4, 'Gripe'),
+	(5, 'Dolores de oído'),
+	(6, 'Dolores de garganta'),
+	(7, 'Cefaleas (migrañas)'),
+	(8, 'Fiebres bajas'),
+	(9, 'Erupciones limitadas'),
+	(10, 'Vómitos severos y persistentes'),
+	(11, 'Lesiones graves'),
+	(12, 'Dolor repentino y severo'),
+	(13, 'Mareo'),
+	(14, 'Debilidad o cambio súbito en la visión');
 
 -- Volcando estructura para tabla gestion_clinica.recetas
 DROP TABLE IF EXISTS `recetas`;
