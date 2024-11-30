@@ -42,15 +42,31 @@ class Correo
             //plantilla HTML
 
             $mensajeHTML = "
-                <p align='center'> 
-                <img src='https://utp.ac.pa/documentos/2015/imagen/logo_utp_1_72.png' width='100px' height='100px' >
-                </p>
-                <p align='center'>Email: $usuario->email</p>
-                <p align='center'>Contrase&ntilde;a: $contrasena</p>
-                <p align='center'><b>Le recomendamos que cambie de contraseña en el siguiente enlace: </b></p>
-                <p align='center'>
-                <a href='http://localhost:3000/views/actualizar/cambiar_contrasena.php?e=$usuario->email&h=$usuario->restablecer'>CAMBIAR</a><br />
-                </p>";
+            <div style='
+                height: auto; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                background-color: rgba(255, 255, 255, 0.9); 
+                border-radius: 15px; 
+                padding: 50px; 
+                text-align: center;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);'>
+                <div>
+                    <img src='https://i.ibb.co/9GWF8dh/Clinica-Vitalis-login.png' style='margin-bottom: 20px;'>
+                    <h1 style='color: #0B3E57; margin-bottom: 20px;'>Recuperación de Contraseña</h1>
+                    <p>Email: <b>$usuario->email</b></p>
+                    <p>Contraseña temporal: <b>$contrasena</b></p>
+                    <p style='margin-top: 20px;'> 
+                        <b>Le recomendamos que cambie de contraseña en el siguiente enlace:</b>
+                    </p>
+                    <a href='http://localhost:3000/views/actualizar/cambiar_contrasena.php?e=$usuario->email&h=$usuario->restablecer'
+                    style='display: inline-block; padding: 10px 20px; margin-top: 20px; color: #fff; text-decoration: none; background-color: #0B3E57; border-radius: 5px;'>
+                        CAMBIAR CONTRASEÑA
+                    </a>
+                </div>
+            </div>";
+
 
 
             //Content

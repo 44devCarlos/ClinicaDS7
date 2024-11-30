@@ -12,7 +12,7 @@ require("../../template/header.php"); ?>
             <form action="../../controllers/procesar_eliminar_usuario.php" method="post">
                 <input type="hidden" name="usuario_id" value="<?php echo htmlspecialchars($usuario["usuario_id"]) ?>">
                 <div class="my-3">
-                    <a href="../listas/lista_usuarios.php" class="btn btn-secondary">Regresar a lista de usuarios</a>
+                    <a href="../views/listas/lista_usuarios.php" class="btn btn-secondary">Regresar a lista de usuarios</a>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-danger">Eliminar</button>

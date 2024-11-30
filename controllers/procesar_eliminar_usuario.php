@@ -23,7 +23,7 @@ $mensaje = $usuarios->eliminar_usuarios();
         </p>
 
         <div>
-            <a href="../views/lista_usuarios.php" class="btn btn-primary">Volver a lista de usuarios</a>
+            <a href="../views/listas/lista_usuarios.php" class="btn btn-primary">Volver a lista de usuarios</a>
         </div>
     </div>
 </section>
