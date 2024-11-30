@@ -2,8 +2,73 @@
 $cita_id = htmlspecialchars($_GET["cita_id"]);
 $nombre = htmlspecialchars($_GET["nombre"]);
 ?>
-<section class="container">
-    <a href="../listas/lista_citas_modificar.php" class="btn btn-secondary my-3 mx-4">Regresar</a>
+
+<style>
+    body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.container10 {
+    margin-top: 0px;
+    max-width: 1200px;
+    margin-left: 340px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+button.btn-primary {
+    background-color: ##0B3E57!important;
+    border-color: #007bff;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+.row {
+    justify-content: center;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+</style>
+
+<section class="container10">
     <div class="row d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-md-6 col-lg-4">
             <h1 class="text-center">Modificar Cita</h1>

@@ -29,13 +29,13 @@ body {
 /* Estilos para el contenedor de la sección */
 .container2 {
     flex: 1;
-    margin-top: 0; /* Espaciado superior */
+    margin-top: -150px; /* Espaciado superior */
     width: 100%; /* Ancho completo */
     height: min-content;
     max-width: auto;
     max-width: 1200px; /* Limitar el ancho máximo */
     margin-left: auto; /* Centrando el contenedor */
-    margin-right: 370px; /* Centrando el contenedor */
+    margin-right: 350px; /* Centrando el contenedor */
 }
 
 /* Estilos para la tabla */

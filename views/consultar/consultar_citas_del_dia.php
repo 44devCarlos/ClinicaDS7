@@ -19,7 +19,12 @@ if ($result === false) {
 ?>
 
 <?php require("../../template/header.php"); ?>
-    <section class="container">
+
+<style>
+    
+</style>
+
+    <section class="container13">
         <div class="row d-flex justify-content-center align-items-center min-vh-90">
             <?php if (isset($result) && !empty($result)) : ?>
                 <div class="table-responsive">

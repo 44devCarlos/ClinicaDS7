@@ -33,7 +33,7 @@ body {
     margin-top: 0; /* Espaciado superior */
     width: 100%; /* Ancho completo */
     height: min-content;
-    max-width: auto;
+    margin-bottom: -123px;
     max-width: 1200px; /* Limitar el ancho máximo */
     margin-left: auto; /* Centrando el contenedor */
     margin-right: 370px; /* Centrando el contenedor */
@@ -100,23 +100,42 @@ body {
 .btn-danger:active {
     background-color: #bd2130; /* Color de fondo al hacer clic */
 }
-    button.btn-primary {
-        background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
-        border-color: #0B3E57!important;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-         /* Color del borde */
+
+a.btn-primary{
+    background-color: #2E708A!important; /* Color azul más oscuro al pasar el mouse */
+    border-color: #2E708A!important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+     /* Color del borde */
     }
 
-    button.btn-primary:hover {
-        background-color: #2E708A!important; /* Color azul */
-        border-color: #2E708A!important;
-        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+a.btn-primary:hover {
+    background-color: #2E708A!important; /* Color azul */
+    border-color: #2E708A!important;
+    transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
         /* Color del borde más oscuro */
     }
-    button.btn-primary:active {
+a.btn-primary:active {
     background-color: #0B3E57!important; /* Color de fondo al hacer clic */
     border-color: #0B3E57!important; /* Color del borde al hacer clic */
+    }
+
+button.btn-primary {
+    background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
+    border-color: #0B3E57!important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+button.btn-primary:hover {
+    background-color: #2E708A!important; /* Color azul */
+    border-color: #2E708A!important;
+    transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+    
+    }
+button.btn-primary:active {
+background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+border-color: #0B3E57!important; /* Color del borde al hacer clic */
     }
 </style>
 <section class="container2 min-vh-100">

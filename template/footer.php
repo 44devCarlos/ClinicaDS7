@@ -1,5 +1,9 @@
 </div>
 <style>
+     html, body {
+            height: 100%; /* Asegura que el cuerpo ocupe el 100% de la altura */
+            margin: 0; /* Elimina el margen por defecto */
+        }
     .footer {
         position: relative;
             background-color: #0B3E57;

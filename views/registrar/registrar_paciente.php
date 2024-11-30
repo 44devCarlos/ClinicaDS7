@@ -13,9 +13,10 @@
     /* Estilos para el contenedor de la sección */
     .container2 {
         flex: 1;
-        width: 1700px; /* Ancho completo */
+        width: 1000px; /* Ancho completo */
         margin: 0 auto; /* Centrando el contenedor */
-        padding: 30px; /* Espaciado interno */
+        margin-right: 468px;
+        padding: 25px; /* Espaciado interno */
         background-color: #ffffff; /* Fondo blanco */
         border-radius: 10px; /* Bordes redondeados */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */

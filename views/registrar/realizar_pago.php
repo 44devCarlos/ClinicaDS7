@@ -47,7 +47,7 @@ $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
     max-width: 1200px; /* Limitar el ancho máximo */
     margin-left: auto; /* Centrando el contenedor */
     margin-right: 370px; /* Centrando el contenedor */
-    padding: 270.5px;
+    padding: 278.5px;
 }
 .table {
     width: 100%; /* Ancho completo */
