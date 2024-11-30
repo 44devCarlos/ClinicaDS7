@@ -81,7 +81,7 @@ class Correo
         }
     }
 
-    public function enviar_factura($email, $servicio, $cantidad, Usuarios $usuario)
+    public function enviar_factura($email, $servicio, $cantidad, $nombre)
     {
         //Enviar email
         $mail = new PHPMailer(true);
@@ -118,7 +118,7 @@ class Correo
                 Número de Factura: <b>149630</b>
             </p>
             <p style='margin: 5px 0; font-size: 14px; color: #555;'>
-                Usuario: <b>$usuario->nombre</b>
+                Usuario: <b>$nombre</b>
             </p>
             <p style='margin: 10px 0; font-size: 16px; font-weight: bold; color: #007BFF;'>
                 Servicio Ofrecido: <b>$servicio</b>

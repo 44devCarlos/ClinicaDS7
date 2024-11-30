@@ -111,6 +111,7 @@ $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
                             <td><?php echo htmlspecialchars($cita["costo"]); ?></td>
                             <td>
                                 <form action="../../controllers/procesar_pago.php" method="POST" style="display:inline;">
+                                    <input type="hidden" name="cita_id" value="<?php echo htmlspecialchars($nombre); ?>">
                                     <input type="hidden" name="cita_id" value="<?php echo htmlspecialchars($cita["cita_id"]); ?>">
                                     <input type="hidden" name="paciente_id" value="<?php echo htmlspecialchars($paciente_id); ?>">
                                     <input type="hidden" name="amount" value="<?php echo htmlspecialchars($cita["costo"]); ?>">

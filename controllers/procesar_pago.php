@@ -1,15 +1,11 @@
 <?php
 require("../includes/Database.php");
 include "../includes/Correo.php";
-include "../includes/Usuarios.php";
 session_start();
-
 $database = new Database();
 $db = $database->getConnection();
 
 $correo = new Correo($db);
-$usuarios = new Usuarios($db);
-$usuarios->nombre = $_POST['nombre'];
 // Obtener los datos del formulario
 $cita_id = $_POST['cita_id'];
 $monto = $_POST['amount'];
@@ -57,7 +53,7 @@ if ($pagoExitoso) {
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             //enviar correo de factura
-            $correo->enviar_factura($result["email"], $result["nombre_servicio"], $monto, $usuarios);
+            $correo->enviar_factura($result["email"], $result["nombre_servicio"], $monto, $result["nombre"]);
             header("Location: ../controllers/pago_exitoso.php");
         } else {
             // Capturar y registrar el error si falla la actualización
