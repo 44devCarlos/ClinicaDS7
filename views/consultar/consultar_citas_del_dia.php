@@ -83,19 +83,19 @@ h1.text-center {
 }
 
 /* Botón */
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    font-size: 14px;
-    color: white!important;
-    background-color: #2e708a!important;
-    border: none!important;
-    text-decoration: none;
-    transition: background-color 0.3s ease!important;
+a.btn {
+    background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
+    border-color: #0B3E57!important;
+    color: #ffffff!important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover {
-    background-color: #0B3E57!important;
+a.btn:hover {
+    background-color: #2E708A!important; /* Color azul */
+    border-color: #2E708A!important;
+    color: #ffffff!important;
+    transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
 }
 
 /* Mensajes de texto */

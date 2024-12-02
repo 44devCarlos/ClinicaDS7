@@ -58,7 +58,26 @@ if (isset($_SESSION['error_message'])) {
 
 require("../../template/header.php");
 ?>
+<style>
+    button.btn-primary {
+        background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57!important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+         /* Color del borde */
+    }
 
+    button.btn-primary:hover {
+        background-color: #2E708A!important; /* Color azul */
+        border-color: #2E708A!important;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
+    }
+    button.btn-primary:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
+    }
+</style>
 <section class="container">
     <div class="row d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-12 col-md-8">
