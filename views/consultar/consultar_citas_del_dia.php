@@ -23,6 +23,9 @@ if ($result === false) {
 <style>
     /* Estilos generales */
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
@@ -30,7 +33,12 @@ body {
     overflow-x: hidden;
 }
 
-
+.container13{
+    flex: 1;
+}
+.container14{
+    flex: 2;
+}
 /* Títulos */
 h1.text-center {
     color: #343a40;
