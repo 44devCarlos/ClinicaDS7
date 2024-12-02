@@ -18,6 +18,11 @@ if ($result === false) {
 <?php require("../../template/header.php"); ?>
 
 <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
     .container17 {
         flex: 1;
         width: 1200px; /* Ancho completo */

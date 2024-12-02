@@ -1,16 +1,26 @@
 <?php require("../../template/header.php"); ?>
 
 <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
     .container16 {
         flex: 1;
-        width: 1000px; /* Ancho completo */
-        margin: 0 auto; /* Centrando el contenedor */
-        margin-right: auto;
-        margin-left: 465px;
-        padding: 25px; /* Espaciado interno */
+        display: flex;
+        width: 100%;
+        overflow-x: hidden;
         background-color: #ffffff; /* Fondo blanco */
         border-radius: 10px; /* Bordes redondeados */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        justify-content: center;
+        align-items: center;
+    }
+    .row {
+        width: 1000px; /* Ancho fijo */
+        max-width: 100%; /* Asegurarse de que no se desborde */
+        justify-content: center;
     }
     .btn-custom {
         background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
@@ -34,7 +44,7 @@
 </style>
 
 <section class="container16">
-    <div class="row d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row">
         <div class="col-md-6 col-lg-4">
             <h1 class="text-center mb-5">Registrar Usuario</h1>
             <form action="../../controllers/procesar_usuarios.php" method="post">

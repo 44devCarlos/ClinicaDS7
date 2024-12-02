@@ -12,13 +12,18 @@ $padecimientos_list = $padecimientos->obtener_padecimientos();
 <?php require('../../template/header.php'); ?>
 
 <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
     .container23 {
         flex: 1;
         width: 1000px; /* Ancho completo */
         margin: 0 auto; /* Centrando el contenedor */
         margin-right: auto;
         margin-left: 465px;
-        padding: 25px; /* Espaciado interno */
+        padding-top: 85px;
         background-color: #ffffff; /* Fondo blanco */
         border-radius: 10px; /* Bordes redondeados */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */

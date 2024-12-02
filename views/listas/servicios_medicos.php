@@ -14,6 +14,11 @@ $result = $servicios_medicos->consultar_servicios();
 ?>
 
 <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
     .container21 {
         flex: 1;
         width: 1000px; /* Ancho completo */
