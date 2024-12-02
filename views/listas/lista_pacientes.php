@@ -22,11 +22,15 @@ if ($result === false) {
 
 <style>
     body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background-color: #f0f4f8;
     font-family: 'Arial', sans-serif;
 }
 
 .container11 {
+    flex: 1;
     margin-top: 0px; /* Espaciado superior */
     margin-bottom: 320px;
     width: 100%; /* Ancho completo */
@@ -60,7 +64,7 @@ h1 {
 }
 
 .table-light {
-    background-color: #f8f9fa;]
+    background-color: #f8f9fa;
 }
 
 .table th, .table td {
