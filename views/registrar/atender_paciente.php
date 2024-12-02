@@ -521,19 +521,69 @@ require("../../template/header.php");
             actualizarOpciones();
         };
 
-        // Manejar cambios en los diagnósticos
-        diagnosticosContainer.addEventListener('change', async (e) => {
-            if (e.target && e.target.name === 'diagnostico[]') {
-                const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
-                padecimientosSeleccionados.clear();
-                selects.forEach(select => {
-                    if (select.value) padecimientosSeleccionados.add(select.value);
-                });
-                const medicamentos = await cargarMedicamentosPorPadecimiento([...padecimientosSeleccionados]);
-                medicamentosDisponibles = medicamentos;
-                actualizarOpciones();
-            }
-        });
+        // Manejar cambios en los diagnósticos y reiniciar medicamentos
+const manejarCambioDiagnosticos = async () => {
+    const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
+    const nuevosPadecimientosSeleccionados = new Set();
+
+    selects.forEach(select => {
+        // Solo agregar el valor del select si no está en su valor por defecto
+        if (select.value && select.value !== "") {
+            nuevosPadecimientosSeleccionados.add(select.value);
+        }
+    });
+
+    // Si es la primera vez que se seleccionan los diagnósticos, inicializar los padecimientos seleccionados
+    if (padecimientosSeleccionados.size === 0 && nuevosPadecimientosSeleccionados.size > 0) {
+        padecimientosSeleccionados.clear();
+        nuevosPadecimientosSeleccionados.forEach(value => padecimientosSeleccionados.add(value));
+        return; // No borrar los campos en el primer cambio
+    }
+
+    // Compara si realmente hubo un cambio en los diagnósticos seleccionados
+    if (nuevosPadecimientosSeleccionados.size === padecimientosSeleccionados.size &&
+        [...nuevosPadecimientosSeleccionados].every(value => padecimientosSeleccionados.has(value))) {
+        return; // No hay cambios
+    }
+
+    // Actualizar los padecimientos seleccionados
+    padecimientosSeleccionados.clear();
+    nuevosPadecimientosSeleccionados.forEach(value => padecimientosSeleccionados.add(value));
+
+    // Obtener los medicamentos disponibles para los nuevos padecimientos seleccionados
+    const medicamentos = await cargarMedicamentosPorPadecimiento([...padecimientosSeleccionados]);
+    medicamentosDisponibles = medicamentos;
+
+    // Crear un Set con los IDs de medicamentos disponibles para la nueva selección de padecimientos
+    const medicamentosDisponiblesSet = new Set(medicamentos.map(m => m.medicamento_id));
+
+    // Limpiar solo los select de medicamentos que ya no están disponibles para el padecimiento
+    const todosLosSelectsMedicamentos = medicamentosContainer.querySelectorAll('select[name="medicamento[]"]');
+    todosLosSelectsMedicamentos.forEach(select => {
+        // Verificamos si el medicamento es parte de un padecimiento diferente
+        const padecimientoAsociado = select.closest('.medicamento-item').dataset.padecimientoId;
+        
+        // Si el medicamento ya no está disponible para el padecimiento actual, lo limpiamos
+        if (select.value && !medicamentosDisponiblesSet.has(select.value) && padecimientoAsociado && !padecimientosSeleccionados.has(padecimientoAsociado)) {
+            select.value = ""; // Reiniciar al valor por defecto
+        }
+    });
+
+    // Reiniciar los campos de tratamientos y ocultarlos si no hay medicamento seleccionado
+    const todosLosContenedoresTratamiento = medicamentosContainer.querySelectorAll('.tratamiento-container');
+    todosLosContenedoresTratamiento.forEach(container => {
+        const selectMedicamento = container.previousElementSibling.querySelector('select');
+        if (selectMedicamento.value === "") {
+            container.style.display = 'none'; // Ocultar el contenedor si no hay medicamento seleccionado
+        }
+    });
+
+    // Ocultar o mostrar el botón de agregar medicamentos según las opciones disponibles
+    addMedicamentoButton.style.display = medicamentosDisponibles.length > 0 ? 'inline-block' : 'none';
+};
+
+
+        diagnosticosContainer.addEventListener('change', manejarCambioDiagnosticos);
 
         // Inicializar el primer select de medicamentos
         const primerSelect = medicamentosContainer.querySelector('select');
@@ -560,6 +610,9 @@ require("../../template/header.php");
 
     });
 </script>
+
+
+
 
 
 
