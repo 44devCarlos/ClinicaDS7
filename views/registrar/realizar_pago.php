@@ -3,8 +3,6 @@ require("../../template/header.php");
 include("../../includes/Database.php");
 include("../../includes/Facturas.php");
 include("../../includes/Citas.php");
-
-session_start();
 $database = new Database();
 $db = $database->getConnection();
 
@@ -35,12 +33,15 @@ $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
 
 <style>
     body {
+    display: flex;
+    flex-direction: column;
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa; /* Color de fondo suave */
     color: #343a40; /* Color de texto */
     overflow-x: hidden; /* Evitar el scroll horizontal */
 }
 .container8 {
+    flex: 1;
     width: 100%; /* Ancho completo */
     max-width: auto;
     max-width: 1200px; /* Limitar el ancho máximo */
@@ -80,13 +81,20 @@ $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
 }
 
 .btn1{
-    background-color: #2e708a; /* Color de fondo rojo */
+    background-color: #0B3E57; /* Color de fondo rojo */
     border: none; /* Sin borde */
     color: white; /* Color de texto blanco */
     padding: 8px 12px; /* Espaciado interno */
     border-radius: 5px; /* Bordes redondeados */
     transition: background-color 0.3s, transform 0.2s; /* Transición suave */
 }
+.btn1:hover {
+        background-color: #2E708A; /* Color azul */
+        border-color: #2E708A;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
+    }
 h1.text-center{
     margin-top: 200px;
 }

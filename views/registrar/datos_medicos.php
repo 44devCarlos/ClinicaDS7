@@ -110,20 +110,27 @@ h3 {
 }
 
 .btn-2 {
-    background-color: #0B3E57!important;
+    background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
+    border-color: #0B3E57!important;
     color: #ffffff!important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-2:hover {
-    background-color: ;
+    background-color: #2E708A!important; /* Color azul */
+    border-color: #2E708A!important;
+    transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
 }
 
 .btn-1 {
     background-color: #9ddbd9!important;
 }
 
-.btn-1 {
+.btn-1:hover {
     background-color: #9ddbd9!important;
+    transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
 }
 
 .btn-danger {
@@ -133,6 +140,8 @@ h3 {
 
 .btn-danger:hover {
     background-color: #c82333;
+    transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 1);
 }
 
 /* Estilos de mensajes de alerta */
@@ -213,31 +222,38 @@ h3 {
 <?php require("../../template/footer.php"); ?>
 
 <script>
-    // Solo habilitar la edición si no existen datos médicos previos
-    if (<?php echo $datos_existentes ? 'true' : 'false'; ?>) {
-        document.getElementById('editar_btn').addEventListener('click', function() {
-            // Cambiar el comportamiento del botón para habilitar la edición
-            document.getElementById('altura').removeAttribute('readonly');
-            document.getElementById('peso').removeAttribute('readonly');
-            document.getElementById('tipo_sangre').removeAttribute('readonly');
-            document.getElementById('alergias').removeAttribute('readonly');
+    document.getElementById('editar_btn').addEventListener('click', function () {
+    const altura = document.getElementById('altura');
+    const peso = document.getElementById('peso');
+    const tipoSangre = document.getElementById('tipo_sangre');
+    const alergias = document.getElementById('alergias');
+    const guardarBtn = document.getElementById('guardar_btn');
 
-            // Habilitar el botón de guardar
-            document.getElementById('guardar_btn').removeAttribute('disabled');
+    if (this.textContent === 'Modificar') {
+        // Habilitar edición
+        altura.removeAttribute('readonly');
+        peso.removeAttribute('readonly');
+        tipoSangre.removeAttribute('readonly');
+        alergias.removeAttribute('readonly');
+        guardarBtn.removeAttribute('disabled');
 
-            // Cambiar el texto del botón de "Modificar" a "Cancelar" (opcional)
-            this.textContent = 'Cancelar Edición';
-            this.classList.remove('btn-1');
-            this.classList.add('btn-danger');
-        });
+        // Cambiar el texto del botón a "Cancelar Edición"
+        this.textContent = 'Cancelar Edición';
+        this.classList.remove('btn-1');
+        this.classList.add('btn-danger');
     } else {
-        // Si no existen datos médicos, habilitar los campos de inmediato para la edición
-        document.getElementById('altura').removeAttribute('readonly');
-        document.getElementById('peso').removeAttribute('readonly');
-        document.getElementById('tipo_sangre').removeAttribute('readonly');
-        document.getElementById('alergias').removeAttribute('readonly');
+        // Cancelar edición: volver a readonly y deshabilitar guardar
+        altura.setAttribute('readonly', true);
+        peso.setAttribute('readonly', true);
+        tipoSangre.setAttribute('readonly', true);
+        alergias.setAttribute('readonly', true);
+        guardarBtn.setAttribute('disabled', true);
 
-        // Habilitar el botón de guardar
-        document.getElementById('guardar_btn').removeAttribute('disabled');
+        // Cambiar el texto del botón a "Modificar"
+        this.textContent = 'Modificar';
+        this.classList.remove('btn-danger');
+        this.classList.add('btn-1');
     }
+});
+
 </script>

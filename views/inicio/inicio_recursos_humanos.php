@@ -80,7 +80,6 @@
 </head>
 
 <body>
-    <a href="../../controllers/cerrar_sesion.php" class="btn btn-secondary my-3 mx-4">Cerrar Sesión</a>
     <div class="content">    
     <!-- Contenido principal -->
     <section class="hero-section">

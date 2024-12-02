@@ -88,6 +88,38 @@
             background-color: #0B3E57!important; /* Color de fondo al hacer clic */
             border-color: #0B3E57!important; /* Color del borde al hacer clic */
         }
+        /* Animación de aparición */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Aplicar animación a las tarjetas */
+        .container .row .col-md-4 .card {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        /* Añadir retraso escalonado para cada tarjeta */
+        .container .row .col-md-4:nth-child(1) .card {
+            animation-delay: 0.2s;
+        }
+
+        .container .row .col-md-4:nth-child(2) .card {
+            animation-delay: 0.4s;
+        }
+
+        .container .row .col-md-4:nth-child(3) .card {
+            animation-delay: 0.6s;
+        }
+
     </style>
 </head>
 

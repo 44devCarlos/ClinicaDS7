@@ -1,19 +1,29 @@
 <?php require("../../template/header.php"); ?>
 
 <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa; /* Color de fondo suave */
+        color: #343a40; /* Color de texto */
+        overflow-x: hidden; /* Evitar el scroll horizontal */
+    }
     .container15 {
         flex: 1;
         width: 1000px; /* Ancho completo */
         margin: 0 auto; /* Centrando el contenedor */
         margin-right: auto;
         margin-left: 467px;
-        padding: 25px; /* Espaciado interno */
         background-color: #ffffff; /* Fondo blanco */
         border-radius: 10px; /* Bordes redondeados */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     }
 
-
+    footer{
+    margin-top: auto;
+    flex-shrink: 0;
+    }
 
     .btn-custom {
         background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
