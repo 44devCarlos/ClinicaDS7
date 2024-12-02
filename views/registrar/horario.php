@@ -2,7 +2,24 @@
 
 <style>
     /* Estilos generales para el contenedor */
+header{
+    flex: 1;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0px;
+    overflow-x: hidden;
+}
+footer{
+    margin-top: auto;
+    flex-shrink: 0;
+}
 .container12 {
+    flex: 1;
     background-color: #f8f9fa; /* Color de fondo claro */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
@@ -22,18 +39,23 @@ h1.text-center {
 }
 
 /* Estilos para los botones */
-.btn {
-    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+button.btn-primary {
+    background-color: #0B3E57; /* Color azul más oscuro al pasar el mouse */
+    border-color: #0B3E57;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+     /* Color del borde */
 }
 
-.btn-primary {
-    background-color: #0b3e57!important; /* Color de fondo del botón */
-    border-color: #0b3e57!important; /* Color del borde del botón */
+button.btn-primary:hover {
+        background-color: #2E708A; /* Color azul */
+        border-color: #2E708A;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
 }
-
-.btn-primary:hover {
-    background-color: #0056b3; /* Color de fondo al pasar el ratón */
-    border-color: #0056b3; /* Color del borde al pasar el ratón */
+button.btn-primary:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
 }
 
 /* Estilos para los campos del formulario */
@@ -58,7 +80,6 @@ h1.text-center {
     text-align: center; /* Alineación centrada */
 }
 </style>
-
 <section class="container12">
     <div class="row d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-md-6 col-lg-4">
@@ -87,5 +108,4 @@ h1.text-center {
         </div>
     </div>
 </section>
-
 <?php require("../../template/footer.php") ?>
