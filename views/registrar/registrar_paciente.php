@@ -16,7 +16,7 @@
         width: 1000px; /* Ancho completo */
         margin: 0 auto; /* Centrando el contenedor */
         margin-right: auto;
-        margin-left: auto;
+        margin-left: 465px;
         padding: 25px; /* Espaciado interno */
         background-color: #ffffff; /* Fondo blanco */
         border-radius: 10px; /* Bordes redondeados */

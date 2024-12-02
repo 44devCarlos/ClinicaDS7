@@ -12,12 +12,49 @@ $servicios_medicos = new Servicios_Medicos($db);
 $result = $servicios_medicos->consultar_servicios();
 
 ?>
-<a href="../../views/admin_inicio.php" class="btn btn-secondary my-3 mx-4">Regresar</a>
 
-<section class="container">
+<style>
+    .container21 {
+        flex: 1;
+        width: 1000px; /* Ancho completo */
+        margin: 0 auto; /* Centrando el contenedor */
+        margin-right: auto;
+        margin-left: 468px;
+        padding: 25px; /* Espaciado interno */
+        background-color: #ffffff; /* Fondo blanco */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
+    .btn-custom {
+        background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57!important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        color: white!important;
+        margin-top: 150px;
+         /* Color del borde */
+    }
+
+    .btn-custom:hover {
+        background-color: #2E708A!important; /* Color azul */
+        border-color: #2E708A!important;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
+    }
+    .btn-custom:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
+    }
+
+    .card{
+        margin-bottom: 346px;
+    }
+</style>
+
+<section class="container21">
     <div class="text-center">
         <h1 class="mb-4">Servicios Médicos</h1>
-        <a href="../registrar/agregar_servicios.php" class="btn btn-primary">Agregar +</a>
+        <a href="../registrar/agregar_servicios.php" class="btn btn-custom">Agregar +</a>
     </div>
 
     <?php if (isset($result) && !empty($result)) : ?>
