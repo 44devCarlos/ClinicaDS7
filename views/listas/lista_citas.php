@@ -32,7 +32,7 @@ body {
     max-width: auto;
     max-width: 1200px; /* Limitar el ancho máximo */
     margin-left: auto; /* Centrando el contenedor */
-    margin-right: 370px; /* Centrando el contenedor */
+    margin-right: auto; /* Centrando el contenedor */
 }
 
 /* Estilos para la tabla */
@@ -73,9 +73,11 @@ body {
     color: #6c757d; /* Color de texto gris */
 }
 
-.text-center h1{
-    font-size: 18px; /* Tamaño de fuente */
-    color: #6c757d; /* Color de texto gris */
+h1.text-center{
+    font-size: 38px; /* Tamaño de fuente */
+    color: black; /* Color de texto gris */
+    margin-left: 40px;
+    margin-right: auto;
 }
 
 /* Estilos para el botón de cancelar */

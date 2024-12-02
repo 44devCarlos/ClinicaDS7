@@ -41,13 +41,12 @@ $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
     overflow-x: hidden; /* Evitar el scroll horizontal */
 }
 .container8 {
-    margin-top: -171px; /* Espaciado superior */
     width: 100%; /* Ancho completo */
     max-width: auto;
     max-width: 1200px; /* Limitar el ancho máximo */
     margin-left: auto; /* Centrando el contenedor */
-    margin-right: 370px; /* Centrando el contenedor */
-    padding: 278.5px;
+    margin-right: auto; /* Centrando el contenedor */
+    padding-bottom: 372.5px;
 }
 .table {
     width: 100%; /* Ancho completo */
@@ -87,6 +86,9 @@ $citas_atendidas = $citas->consultar_citas_atendidas_por_paciente($paciente_id);
     padding: 8px 12px; /* Espaciado interno */
     border-radius: 5px; /* Bordes redondeados */
     transition: background-color 0.3s, transform 0.2s; /* Transición suave */
+}
+h1.text-center{
+    margin-top: 200px;
 }
 </style>
 

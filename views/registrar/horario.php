@@ -15,8 +15,9 @@
 }
 
 /* Estilos para el título */
-h1 {
+h1.text-center {
     color: #343a40; /* Color del texto */
+    margin-top: -70px;
     
 }
 

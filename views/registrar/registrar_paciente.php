@@ -15,7 +15,8 @@
         flex: 1;
         width: 1000px; /* Ancho completo */
         margin: 0 auto; /* Centrando el contenedor */
-        margin-right: 468px;
+        margin-right: auto;
+        margin-left: auto;
         padding: 25px; /* Espaciado interno */
         background-color: #ffffff; /* Fondo blanco */
         border-radius: 10px; /* Bordes redondeados */

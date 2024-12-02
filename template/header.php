@@ -40,7 +40,7 @@ $rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Sin rol';
         align-self: center; /* Alinea verticalmente el texto con el logo */
         font-weight: bold;
         align-self: center;
-        margin-right: 47px;
+        margin-right: 0px;
     }
 
     /* Posicionamiento del dropdown debajo de la flecha */

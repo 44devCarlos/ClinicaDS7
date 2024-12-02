@@ -72,7 +72,7 @@ h3 {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 0px;
     margin-bottom: -123px;
-    margin-left: auto;
+    margin-left: 560px;
     margin-right: auto;
 }
 

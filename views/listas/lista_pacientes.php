@@ -42,6 +42,7 @@ h1 {
     margin-bottom: 0px;
     font-size: 18px;
     animation: fadeIn 1s ease-in-out;
+    margin-left: 40px;
 }
 
 .table-responsive {

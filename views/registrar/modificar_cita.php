@@ -35,15 +35,17 @@ h1 {
     font-weight: bold;
 }
 
-button.btn-primary {
-    background-color: ##0B3E57!important;
-    border-color: #007bff;
-    transition: background-color 0.2s;
+.btn-custom {
+    background-color: #0b3e57!important;
+    border-color: #0b3e57!important;
+    color: white!important;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
+.btn-custom:hover {
+    background-color: #0b3e57!important;
+    border-color: #0b3e57!important;
+    color: white!important;
 }
 
 .text-center {
@@ -139,7 +141,7 @@ button.btn-primary {
                 </div>
 
                 <div class="text-center mt-2">
-                    <button type="submit" class="btn btn-primary">Modificar la cita</button>
+                    <button type="submit" class="btn btn-custom">Modificar cita</button>
                 </div>
             </form>
         </div>
