@@ -74,9 +74,43 @@ require("../../template/header.php");
         /* Color del borde más oscuro */
     }
     button.btn-primary:active {
-    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
-    border-color: #0B3E57!important; /* Color del borde al hacer clic */
+        background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+        border-color: #0B3E57!important; /* Color del borde al hacer clic */
     }
+    button.mt-2 {
+        background-color: #6c757d !important; /* Gris oscuro */
+        border-color: #6c757d !important; /* Gris oscuro */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button.mt-2:hover {
+        background-color: #5a6268 !important; /* Gris más oscuro */
+        border-color: #5a6268 !important; /* Gris más oscuro */
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra gris más tenue */
+    }
+
+    button.mt-2:active {
+        background-color: #343a40 !important; /* Gris aún más oscuro */
+        border-color: #343a40 !important; /* Gris aún más oscuro */
+    }
+    #add-medicamento {
+        margin-top: 15px;
+        background-color: #6c757d !important; /* Gris oscuro */
+        border-color: #6c757d !important; /* Gris oscuro */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #add-medicamento:hover {
+        background-color: #5a6268 !important; /* Gris más oscuro */
+        border-color: #5a6268 !important; /* Gris más oscuro */
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra gris más tenue */
+    }
+    #add-medicamento:active {
+        background-color: #343a40 !important; /* Gris aún más oscuro */
+        border-color: #343a40 !important; /* Gris aún más oscuro */
+    }
+
 </style>
 <section class="container">
     <div class="row d-flex justify-content-center align-items-center min-vh-100">

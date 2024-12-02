@@ -124,7 +124,8 @@ h3 {
 }
 
 .btn-1 {
-    background-color: #9ddbd9!important;
+    background-color: #2E708A!important;
+    color: #ffffff!important;
 }
 
 .btn-1:hover {
