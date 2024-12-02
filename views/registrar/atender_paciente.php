@@ -250,6 +250,7 @@ require("../../template/header.php");
 
         // Función para llenar un select con los medicamentos disponibles
         const llenarSelectMedicamentos = (select, medicamentos) => {
+            let medicamentoAnterior = select.value;
             select.innerHTML = `
             <option value="" disabled selected>Seleccione un medicamento</option>
         `;
@@ -257,6 +258,9 @@ require("../../template/header.php");
                 const option = document.createElement('option');
                 option.value = medicamento.medicamento_id;
                 option.textContent = medicamento.nombre;
+                if (medicamento.medicamento_id == medicamentoAnterior) {
+                    option.selected = true;
+                }
                 select.appendChild(option);
             });
         };
@@ -266,7 +270,7 @@ require("../../template/header.php");
             const todosLosSelects = medicamentosContainer.querySelectorAll('select[name="medicamento[]"]');
             const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
             let totalOpcionesDisponibles = 0; // Contador de opciones disponibles
-            
+
             // Limpiar y reconstruir el conjunto de medicos seleccionados
             medicamentosSeleccionados.clear();
             todosLosSelects.forEach(select => {
@@ -325,10 +329,18 @@ require("../../template/header.php");
                     cargarMedicamentosPorPadecimiento([...padecimientosSeleccionados]).then((medicamentos) => {
                         let primerSelect = medicamentosContainer.querySelector('select[name="medicamento[]"]');
                         llenarSelectMedicamentos(primerSelect, medicamentos); // Asegurar que el primer select se llena
+                        const todosLosSelects = medicamentosContainer.querySelectorAll('select[name="medicamento[]"]');
+
+                        if (todosLosSelects.length > 1) {
+                            for (let i = 1; i < todosLosSelects.length; i++) {
+                                llenarSelectMedicamentos(todosLosSelects[i], medicamentos);
+                            }
+                        }
                         actualizarOpciones(); // Verificar el estado del botón
                         actualizarOpcionesMedicamentos();
                     });
                 }
+
             }
         });
 
@@ -379,7 +391,7 @@ require("../../template/header.php");
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const medicamentosContainer = document.getElementById('medicamentos-container');
         const diagnosticosContainer = document.getElementById('diagnosticos-container');
         const addMedicamentoButton = document.getElementById('add-medicamento');
@@ -392,8 +404,12 @@ require("../../template/header.php");
             try {
                 const response = await fetch(`../../ajax/get_medicamentos.php`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ padecimientos: arrayPadecimientos }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        padecimientos: arrayPadecimientos
+                    }),
                 });
                 const data = await response.json();
                 return data.medicamentos || [];
@@ -408,7 +424,11 @@ require("../../template/header.php");
             select.innerHTML = `
                 <option value="" disabled selected>Seleccione un medicamento</option>
             `;
-            medicamentos.forEach(({ medicamento_id, nombre }) => {
+
+            medicamentos.forEach(({
+                medicamento_id,
+                nombre
+            }) => {
                 const option = document.createElement('option');
                 option.value = medicamento_id;
                 option.textContent = nombre;
@@ -488,7 +508,7 @@ require("../../template/header.php");
             const medicamentos = await cargarMedicamentosPorPadecimiento([...padecimientosSeleccionados]);
             llenarSelectMedicamentos(medicamentoSelect, medicamentos);
 
-            medicamentoSelect.addEventListener('change', function () {
+            medicamentoSelect.addEventListener('change', function() {
                 const medicamentoId = this.value;
                 if (medicamentoId) {
                     medicamentosSeleccionados.add(medicamentoId);
@@ -520,7 +540,7 @@ require("../../template/header.php");
         const primerTratamientoContainer = medicamentosContainer.querySelector('.tratamiento-container');
         if (primerSelect) {
             llenarSelectMedicamentos(primerSelect, medicamentosDisponibles);
-            primerSelect.addEventListener('change', function () {
+            primerSelect.addEventListener('change', function() {
                 const medicamentoId = this.value;
                 if (medicamentoId) {
                     medicamentosSeleccionados.add(medicamentoId);
@@ -538,12 +558,6 @@ require("../../template/header.php");
         // Ocultar botón inicialmente
         addMedicamentoButton.style.display = 'none';
 
-        // Cargar medicamentos al inicio
-        cargarMedicamentosPorPadecimiento([...padecimientosSeleccionados]).then(medicamentos => {
-            medicamentosDisponibles = medicamentos;
-            if (primerSelect) llenarSelectMedicamentos(primerSelect, medicamentos);
-            actualizarOpciones();
-        });
     });
 </script>
 
