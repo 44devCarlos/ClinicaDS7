@@ -1,6 +1,39 @@
 <?php require("../../template/header.php"); ?>
 
-<section class="container">
+<style>
+    .container16 {
+        flex: 1;
+        width: 1000px; /* Ancho completo */
+        margin: 0 auto; /* Centrando el contenedor */
+        margin-right: auto;
+        margin-left: 465px;
+        padding: 25px; /* Espaciado interno */
+        background-color: #ffffff; /* Fondo blanco */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
+    .btn-custom {
+        background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57!important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        color: white!important;
+         /* Color del borde */
+    }
+
+    .btn-custom:hover {
+        background-color: #2E708A!important; /* Color azul */
+        border-color: #2E708A!important;
+        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        /* Color del borde más oscuro */
+    }
+    .btn-custom:active {
+    background-color: #0B3E57!important; /* Color de fondo al hacer clic */
+    border-color: #0B3E57!important; /* Color del borde al hacer clic */
+    }
+</style>
+
+<section class="container16">
     <div class="row d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-md-6 col-lg-4">
             <h1 class="text-center mb-5">Registrar Usuario</h1>
@@ -31,12 +64,8 @@
                     </select>
                 </div>
 
-                <div class="text-center mt-4">
-                    <a href="../inicio/admin_inicio.php" class="btn btn-secondary my-3 mx-4">Regresar</a>
-                </div>
-
                 <div class="text-center mt-2">
-                    <button type="submit" class="btn btn-primary">Registrar usuario</button>
+                    <button type="submit" class="btn btn-custom">Registrar usuario</button>
                 </div>
             </form>
         </div>
