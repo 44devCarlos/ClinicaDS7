@@ -29,7 +29,7 @@ body {
 /* Estilos para el contenedor de la sección */
 .container2 {
     flex: 1;
-    margin-top: -150px; /* Espaciado superior */
+    padding-top: 75px;
     width: 100%; /* Ancho completo */
     height: min-content;
     max-width: auto;
@@ -119,8 +119,7 @@ body {
     }
 </style>
 <section class="container2">
-    <a href="../inicio/inicio_recepcionista.php" class="btn btn-secondary my-3 mx-4">Regresar</a>
-    <div class="row d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row d-flex justify-content-center align-items-center">
         <?php if (isset($result) && !empty($result)) : ?>
             <div class="table-responsive">
                 <h1 class="text-center">Solicitudes de citas</h1>

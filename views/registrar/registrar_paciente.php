@@ -12,18 +12,20 @@
 
     /* Estilos para el contenedor de la sección */
     .container2 {
+        position: relative;
         flex: 1;
         width: 1000px; /* Ancho completo */
         margin: 0 auto; /* Centrando el contenedor */
         margin-right: auto;
         margin-left: 465px;
-        padding: 25px; /* Espaciado interno */
+        padding: 0; /* Espaciado interno */
         background-color: #ffffff; /* Fondo blanco */
         border-radius: 10px; /* Bordes redondeados */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     }
     .content {
             flex: 1; /* Permite que el contenido ocupe el espacio disponible */
+            padding-top: 75px;
         }
     /* Estilos para los títulos */
     .text-center h1 {
@@ -84,7 +86,7 @@
 </style>
 <div class="content">
 <section class="container2">
-    <div class="row d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row d-flex justify-content-center align-items-center">
         <div class="col-md-6 col-lg-4">
             <h1 class="text-center mb-5">Registrar Paciente</h1>
             <form action="../../controllers/procesar_pacientes.php" method="post">

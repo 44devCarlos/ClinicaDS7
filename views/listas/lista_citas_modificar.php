@@ -28,9 +28,12 @@ body {
 }
 
 /* Estilos para el contenedor de la sección */
-.container2 {
+header{
     flex: 1;
-    margin-top: 0; /* Espaciado superior */
+}
+.container2 {
+    flex: 2;
+    padding-top: 70px;
     width: 100%; /* Ancho completo */
     height: min-content;
     margin-bottom: -123px;
@@ -139,7 +142,6 @@ border-color: #0B3E57!important; /* Color del borde al hacer clic */
     }
 </style>
 <section class="container2 min-vh-100">
-    <a href="../inicio/inicio_recepcionista.php" class="btn btn-secondary my-3 mx-4">Regresar</a>
 
     <!-- Formulario para buscar por cédula -->
     <form method="GET" class="my-4 d-flex justify-content-center">
