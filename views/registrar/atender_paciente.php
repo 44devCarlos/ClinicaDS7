@@ -59,6 +59,18 @@ if (isset($_SESSION['error_message'])) {
 require("../../template/header.php");
 ?>
 <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+        overflow-x: hidden;
+    }
+    .container2 {
+        padding-top: 75px;
+        flex: 2;
+        
+    }
     button.btn-primary {
         background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
         border-color: #0B3E57!important;
@@ -112,8 +124,8 @@ require("../../template/header.php");
     }
 
 </style>
-<section class="container">
-    <div class="row d-flex justify-content-center align-items-center min-vh-100">
+<section class="container2">
+    <div class="row d-flex justify-content-center align-items-center">
         <div class="col-12 col-md-8">
             <h2 class="text-center">Formulario de Atención al Paciente</h2>
             <form action="../../controllers/procesar_atencion.php" method="POST" class="form">
