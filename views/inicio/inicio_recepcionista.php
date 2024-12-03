@@ -115,24 +115,6 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <img alt="Registro de pago de consultas" class="card-img-top" height="300" src="https://storage.googleapis.com/a1aa/image/i0biLXv6N4KFNtveJeeugHpuhotLZs5ziAVUOOqlQFezYeleE.jpg" width="400"/>
-                    <div class="card-body">
-                        <a href="#" class="btn btn-primary mb-3">Registro de pago de consultas</a>
-                        <p class="card-text">Realiza el registro de los pagos de las consultas médicas.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img alt="Consultar disponibilidad de médicos" class="card-img-top" height="300" src="https://storage.googleapis.com/a1aa/image/7l2ByUrCQQKeMSO8JO2bjIYYr0T4TZWphgSB4MFV8VIFzX6JA.jpg" width="400"/>
-                    <div class="card-body">
-                        <a href="../consultar/consultar_disponibilidad_medico.php" class="btn btn-primary mb-3">Consultar Disponibilidad de Médicos</a>
-                        <p class="card-text">Consulta la disponibilidad de médicos para citas.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
                     <img alt="Creación de citas" class="card-img-top" height="300" src="https://storage.googleapis.com/a1aa/image/i0biLXv6N4KFNtveJeeugHpuhotLZs5ziAVUOOqlQFezYeleE.jpg" width="400"/>
                     <div class="card-body">
                         <a href="../listas/gestion_citas.php" class="btn btn-primary mb-3">Creación de Citas</a>

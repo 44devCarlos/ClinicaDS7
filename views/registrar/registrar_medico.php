@@ -115,9 +115,6 @@
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-custom">Registrar médico</button>
                 </div>
-                <div class="text-center mt-4">
-                    <a href="../listas/lista_medicos.php" class="btn btn-custom">Verificar Médicos</a>
-                </div>
             </form>
         </div>
     </div>

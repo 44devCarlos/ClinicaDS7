@@ -124,15 +124,6 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card">
-                        <img alt="Imagen de un laboratorio con tubos de ensayo" class="card-img-top" height="300" src="https://storage.googleapis.com/a1aa/image/7l2ByUrCQQKeMSO8JO2bjIYYr0T4TZWphgSB4MFV8VIFzX6JA.jpg" width="400"/>
-                        <div class="card-body">
-                            <a href="#" class="btn btn-primary mb-3">Verificar historial médico</a>
-                            <p class="card-text">Realizamos una amplia gama de análisis clínicos con resultados rápidos y precisos.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
                         <img alt="Imagen de un equipo de rayos X" class="card-img-top" height="300" src="https://storage.googleapis.com/a1aa/image/i0biLXv6N4KFNtveJeeugHpuhotLZs5ziAVUOOqlQFezYeleE.jpg" width="400"/>
                         <div class="card-body">
                             <a href="../registrar/datos_medicos.php" class="btn btn-primary mb-3">Registrar Datos Médicos</a>

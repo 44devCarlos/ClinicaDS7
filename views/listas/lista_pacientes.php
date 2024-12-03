@@ -163,7 +163,7 @@ h1 {
                 </div>
             <?php else : ?>
                 <div class="text-center">
-                    <p>No hay citas pacientes</p>
+                    <p>No hay pacientes</p>
                 </div>
             <?php endif; ?>
         </div>

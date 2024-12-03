@@ -102,7 +102,7 @@ button.btn-primary:active {
                 </div>
 
                 <div class="text-center mt-2">
-                    <button type="submit" class="btn btn-primary">Crear cita</button>
+                    <button type="submit" class="btn btn-primary">Crear turno</button>
                 </div>
             </form>
         </div>
