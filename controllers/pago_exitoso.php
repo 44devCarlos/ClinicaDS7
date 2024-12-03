@@ -5,12 +5,15 @@ require("../template/header.php");
 
 <style>
     body {
+        display: flex;
+        flex-direction: column;
         background-color: #f8f9fa;
         font-family: 'Arial', sans-serif;
         overflow-x: hidden;
     }
     
     .container9 {
+        flex: 1;
         max-width: 800px;
         padding: 200px;
         height: 794px;
