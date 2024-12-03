@@ -158,19 +158,6 @@
 
                 <div class="col-md-4">
                     <div class="card">
-                        <img alt="Farmacia" class="card-img-top" height="300" src="https://storage.googleapis.com/a1aa/image/7l2ByUrCQQKeMSO8JO2bjIYYr0T4TZWphgSB4MFV8VIFzX6JA.jpg" width="400"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Farmacia</h5>
-                            <p class="card-text">Ajusta las configuraciones globales.</p>
-                            <a href="#" class="btn btn-primary mb-3">Consultar disponibilidad de medicamento</a>
-                            <a href="#" class="btn btn-primary mb-3">Suministrar medicamentos</a>
-                            <a href="#" class="btn btn-primary mb-3">Solicitar reabastecimiento</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card">
                     <img alt="Gestión de Pacientes" class="card-img-top" height="300" src="https://storage.googleapis.com/a1aa/image/7l2ByUrCQQKeMSO8JO2bjIYYr0T4TZWphgSB4MFV8VIFzX6JA.jpg" width="400"/>
                         <div class="card-body">
                             <h5 class="card-title">Gestión de Pacientes</h5>
