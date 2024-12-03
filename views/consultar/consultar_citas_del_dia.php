@@ -143,7 +143,7 @@ a.btn:hover {
                                     <td><?php echo htmlspecialchars($row["Paciente"]); ?></td>
                                     <td><?php echo htmlspecialchars($row["hora"]); ?></td>
                                     <td>
-                                        <a href="../registrar/atender_paciente.php?paciente_id=<?php echo htmlspecialchars($row["paciente_id"]); ?>" class="btn btn-custom">Atender</a>
+                                        <a href="../registrar/atender_paciente.php?paciente_id=<?php echo htmlspecialchars($row["paciente_id"]); ?>&cita_id=<?php echo htmlspecialchars($row["cita_id"]);?>" class="btn btn-custom">Atender</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

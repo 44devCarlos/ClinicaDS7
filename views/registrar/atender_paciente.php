@@ -45,17 +45,6 @@ $stmt_medicamentos = $db->prepare($query_medicamentos);
 $stmt_medicamentos->execute();
 $medicamentos = $stmt_medicamentos->fetchAll(PDO::FETCH_ASSOC);
 
-// Mostrar mensajes de éxito o error
-if (isset($_SESSION['success_message'])) {
-    echo '<div class="alert alert-success" role="alert">' . $_SESSION['success_message'] . '</div>';
-    unset($_SESSION['success_message']); // Limpiar el mensaje después de mostrarlo
-}
-
-if (isset($_SESSION['error_message'])) {
-    echo '<div class="alert alert-danger" role="alert">' . $_SESSION['error_message'] . '</div>';
-    unset($_SESSION['error_message']); // Limpiar el mensaje después de mostrarlo
-}
-
 require("../../template/header.php");
 ?>
 <style>
@@ -72,63 +61,89 @@ require("../../template/header.php");
         
     }
     button.btn-primary {
-        background-color: #0B3E57!important; /* Color azul más oscuro al pasar el mouse */
-        border-color: #0B3E57!important;
+        background-color: #0B3E57 !important;
+        /* Color azul más oscuro al pasar el mouse */
+        border-color: #0B3E57 !important;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
-         /* Color del borde */
+        /* Color del borde */
     }
 
     button.btn-primary:hover {
-        background-color: #2E708A!important; /* Color azul */
-        border-color: #2E708A!important;
-        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); 
+        background-color: #2E708A !important;
+        /* Color azul */
+        border-color: #2E708A !important;
+        transform: translateY(-2px);
+        /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
         /* Color del borde más oscuro */
     }
+
     button.btn-primary:active {
-        background-color: #0B3E57!important; /* Color de fondo al hacer clic */
-        border-color: #0B3E57!important; /* Color del borde al hacer clic */
+        background-color: #0B3E57 !important;
+        /* Color de fondo al hacer clic */
+        border-color: #0B3E57 !important;
+        /* Color del borde al hacer clic */
     }
+
     button.mt-2 {
-        background-color: #6c757d !important; /* Gris oscuro */
-        border-color: #6c757d !important; /* Gris oscuro */
+        background-color: #6c757d !important;
+        /* Gris oscuro */
+        border-color: #6c757d !important;
+        /* Gris oscuro */
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     button.mt-2:hover {
-        background-color: #5a6268 !important; /* Gris más oscuro */
-        border-color: #5a6268 !important; /* Gris más oscuro */
-        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra gris más tenue */
+        background-color: #5a6268 !important;
+        /* Gris más oscuro */
+        border-color: #5a6268 !important;
+        /* Gris más oscuro */
+        transform: translateY(-2px);
+        /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        /* Sombra gris más tenue */
     }
 
     button.mt-2:active {
-        background-color: #343a40 !important; /* Gris aún más oscuro */
-        border-color: #343a40 !important; /* Gris aún más oscuro */
-    }
-    #add-medicamento {
-        margin-top: 15px;
-        background-color: #6c757d !important; /* Gris oscuro */
-        border-color: #6c757d !important; /* Gris oscuro */
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    #add-medicamento:hover {
-        background-color: #5a6268 !important; /* Gris más oscuro */
-        border-color: #5a6268 !important; /* Gris más oscuro */
-        transform: translateY(-2px); /* Mueve ligeramente hacia arriba */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra gris más tenue */
-    }
-    #add-medicamento:active {
-        background-color: #343a40 !important; /* Gris aún más oscuro */
-        border-color: #343a40 !important; /* Gris aún más oscuro */
+        background-color: #343a40 !important;
+        /* Gris aún más oscuro */
+        border-color: #343a40 !important;
+        /* Gris aún más oscuro */
     }
 
+    #add-medicamento {
+        margin-top: 15px;
+        background-color: #6c757d !important;
+        /* Gris oscuro */
+        border-color: #6c757d !important;
+        /* Gris oscuro */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #add-medicamento:hover {
+        background-color: #5a6268 !important;
+        /* Gris más oscuro */
+        border-color: #5a6268 !important;
+        /* Gris más oscuro */
+        transform: translateY(-2px);
+        /* Mueve ligeramente hacia arriba */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        /* Sombra gris más tenue */
+    }
+
+    #add-medicamento:active {
+        background-color: #343a40 !important;
+        /* Gris aún más oscuro */
+        border-color: #343a40 !important;
+        /* Gris aún más oscuro */
+    }
 </style>
 <section class="container2">
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-12 col-md-8">
             <h2 class="text-center">Formulario de Atención al Paciente</h2>
             <form action="../../controllers/procesar_atencion.php" method="POST" class="form">
+                <input type="hidden" id="cita_id" name="cita_id" class="form-control" readonly value="<?php echo htmlspecialchars($_GET["cita_id"]); ?>">
 
                 <!-- Datos Básicos del Paciente -->
                 <h3 class="mt-4">Datos Básicos del Paciente</h3>
@@ -587,65 +602,64 @@ require("../../template/header.php");
         };
 
         // Manejar cambios en los diagnósticos y reiniciar medicamentos
-const manejarCambioDiagnosticos = async () => {
-    const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
-    const nuevosPadecimientosSeleccionados = new Set();
+        const manejarCambioDiagnosticos = async () => {
+            const selects = diagnosticosContainer.querySelectorAll('select[name="diagnostico[]"]');
+            const nuevosPadecimientosSeleccionados = new Set();
 
-    selects.forEach(select => {
-        // Solo agregar el valor del select si no está en su valor por defecto
-        if (select.value && select.value !== "") {
-            nuevosPadecimientosSeleccionados.add(select.value);
-        }
-    });
+            selects.forEach(select => {
+                // Solo agregar el valor del select si no está en su valor por defecto
+                if (select.value && select.value !== "") {
+                    nuevosPadecimientosSeleccionados.add(select.value);
+                }
+            });
 
-    // Si es la primera vez que se seleccionan los diagnósticos, inicializar los padecimientos seleccionados
-    if (padecimientosSeleccionados.size === 0 && nuevosPadecimientosSeleccionados.size > 0) {
-        padecimientosSeleccionados.clear();
-        nuevosPadecimientosSeleccionados.forEach(value => padecimientosSeleccionados.add(value));
-        return; // No borrar los campos en el primer cambio
-    }
+            // Si es la primera vez que se seleccionan los diagnósticos, inicializar los padecimientos seleccionados
+            if (padecimientosSeleccionados.size === 0 && nuevosPadecimientosSeleccionados.size > 0) {
+                padecimientosSeleccionados.clear();
+                nuevosPadecimientosSeleccionados.forEach(value => padecimientosSeleccionados.add(value));
+                return; // No borrar los campos en el primer cambio
+            }
 
-    // Compara si realmente hubo un cambio en los diagnósticos seleccionados
-    if (nuevosPadecimientosSeleccionados.size === padecimientosSeleccionados.size &&
-        [...nuevosPadecimientosSeleccionados].every(value => padecimientosSeleccionados.has(value))) {
-        return; // No hay cambios
-    }
+            // Compara si realmente hubo un cambio en los diagnósticos seleccionados
+            if (nuevosPadecimientosSeleccionados.size === padecimientosSeleccionados.size && [...nuevosPadecimientosSeleccionados].every(value => padecimientosSeleccionados.has(value))) {
+                return; // No hay cambios
+            }
 
-    // Actualizar los padecimientos seleccionados
-    padecimientosSeleccionados.clear();
-    nuevosPadecimientosSeleccionados.forEach(value => padecimientosSeleccionados.add(value));
+            // Actualizar los padecimientos seleccionados
+            padecimientosSeleccionados.clear();
+            nuevosPadecimientosSeleccionados.forEach(value => padecimientosSeleccionados.add(value));
 
-    // Obtener los medicamentos disponibles para los nuevos padecimientos seleccionados
-    const medicamentos = await cargarMedicamentosPorPadecimiento([...padecimientosSeleccionados]);
-    medicamentosDisponibles = medicamentos;
+            // Obtener los medicamentos disponibles para los nuevos padecimientos seleccionados
+            const medicamentos = await cargarMedicamentosPorPadecimiento([...padecimientosSeleccionados]);
+            medicamentosDisponibles = medicamentos;
 
-    // Crear un Set con los IDs de medicamentos disponibles para la nueva selección de padecimientos
-    const medicamentosDisponiblesSet = new Set(medicamentos.map(m => m.medicamento_id));
+            // Crear un Set con los IDs de medicamentos disponibles para la nueva selección de padecimientos
+            const medicamentosDisponiblesSet = new Set(medicamentos.map(m => m.medicamento_id));
 
-    // Limpiar solo los select de medicamentos que ya no están disponibles para el padecimiento
-    const todosLosSelectsMedicamentos = medicamentosContainer.querySelectorAll('select[name="medicamento[]"]');
-    todosLosSelectsMedicamentos.forEach(select => {
-        // Verificamos si el medicamento es parte de un padecimiento diferente
-        const padecimientoAsociado = select.closest('.medicamento-item').dataset.padecimientoId;
-        
-        // Si el medicamento ya no está disponible para el padecimiento actual, lo limpiamos
-        if (select.value && !medicamentosDisponiblesSet.has(select.value) && padecimientoAsociado && !padecimientosSeleccionados.has(padecimientoAsociado)) {
-            select.value = ""; // Reiniciar al valor por defecto
-        }
-    });
+            // Limpiar solo los select de medicamentos que ya no están disponibles para el padecimiento
+            const todosLosSelectsMedicamentos = medicamentosContainer.querySelectorAll('select[name="medicamento[]"]');
+            todosLosSelectsMedicamentos.forEach(select => {
+                // Verificamos si el medicamento es parte de un padecimiento diferente
+                const padecimientoAsociado = select.closest('.medicamento-item').dataset.padecimientoId;
 
-    // Reiniciar los campos de tratamientos y ocultarlos si no hay medicamento seleccionado
-    const todosLosContenedoresTratamiento = medicamentosContainer.querySelectorAll('.tratamiento-container');
-    todosLosContenedoresTratamiento.forEach(container => {
-        const selectMedicamento = container.previousElementSibling.querySelector('select');
-        if (selectMedicamento.value === "") {
-            container.style.display = 'none'; // Ocultar el contenedor si no hay medicamento seleccionado
-        }
-    });
+                // Si el medicamento ya no está disponible para el padecimiento actual, lo limpiamos
+                if (select.value && !medicamentosDisponiblesSet.has(select.value) && padecimientoAsociado && !padecimientosSeleccionados.has(padecimientoAsociado)) {
+                    select.value = ""; // Reiniciar al valor por defecto
+                }
+            });
 
-    // Ocultar o mostrar el botón de agregar medicamentos según las opciones disponibles
-    addMedicamentoButton.style.display = medicamentosDisponibles.length > 0 ? 'inline-block' : 'none';
-};
+            // Reiniciar los campos de tratamientos y ocultarlos si no hay medicamento seleccionado
+            const todosLosContenedoresTratamiento = medicamentosContainer.querySelectorAll('.tratamiento-container');
+            todosLosContenedoresTratamiento.forEach(container => {
+                const selectMedicamento = container.previousElementSibling.querySelector('select');
+                if (selectMedicamento.value === "") {
+                    container.style.display = 'none'; // Ocultar el contenedor si no hay medicamento seleccionado
+                }
+            });
+
+            // Ocultar o mostrar el botón de agregar medicamentos según las opciones disponibles
+            addMedicamentoButton.style.display = medicamentosDisponibles.length > 0 ? 'inline-block' : 'none';
+        };
 
 
         diagnosticosContainer.addEventListener('change', manejarCambioDiagnosticos);

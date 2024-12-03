@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: ../views/registrar/atender_paciente.php");
         exit();
     }
-
+    $cita_id = $_POST["cita_id"];
     $paciente_id = $_POST['paciente_id'];
     $diagnosticos = $_POST['diagnostico']; // Puede ser un array de diagnósticos
     $medicamento = $_POST['medicamento'];
@@ -119,13 +119,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $_SESSION['error_message'] = 'Error al guardar el historial clínico.';
     }
+    $query = "UPDATE citas
+                SET estado = 'Atendido'
+                WHERE cita_id = :cita_id";
+    $stmt = $db->prepare($query);
 
-    // Redirigir de vuelta al formulario
-    header("Location: ../views/registrar/atender_paciente.php?paciente_id=" . $paciente_id);
-    exit();
+    $stmt->bindParam(':cita_id', $cita_id);
+    $stmt->execute();
+    $resultado = 'El paciente ha sido atendido con éxito';
 } else {
     $_SESSION['error_message'] = 'No se han enviado datos.';
     header("Location: ../views/registrar/atender_paciente.php");
     exit();
 }
 ?>
+
+<?php require("../template/header.php"); ?>
+
+<section class="container">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="text-center border p-5">
+            <?php echo htmlspecialchars($resultado); ?>
+            <p class="mt-3">Redirigiendo en 5 segundos a inicio...</p>
+        </div>
+    </div>
+</section>
+
+<!-- Script para redirigir después de 5 segundos -->
+<script>
+    setTimeout(function() {
+        window.location.href = "../views/consultar/consultar_citas_del_dia.php";
+    }, 5000);
+</script>
+
+<?php require("../template/footer.php"); ?>
