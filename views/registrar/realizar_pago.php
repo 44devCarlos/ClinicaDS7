@@ -101,7 +101,7 @@ h1.text-center{
 </style>
 
 <section class="container8 mt-3">
-    <h1 class="text-center">Citas Atendidas</h1>
+    <h1 class="text-center">Citas por Pagar</h1>
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead class="table-light">
@@ -117,8 +117,13 @@ h1.text-center{
                     <?php foreach ($citas_atendidas as $cita): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($cita["fecha"]); ?></td>
-                            <td><?php echo htmlspecialchars($cita["hora"]); ?></td>
-                            <td><?php echo htmlspecialchars($cita["costo"]); ?></td>
+                            <td><?php
+                                    if ($cita["hora"] > 12) {
+                                        echo htmlspecialchars($cita["hora"]) . " pm";
+                                    } else {
+                                        echo htmlspecialchars($cita["hora"]) . " am";
+                                    } ?></td>
+                            <td><?php echo '$' . htmlspecialchars($cita["costo"]); ?></td>
                             <td>
                                 <form action="../../controllers/procesar_pago.php" method="POST" style="display:inline;">
                                     <input type="hidden" name="cita_id" value="<?php echo htmlspecialchars($nombre); ?>">
